@@ -17,13 +17,14 @@ $authController = new AuthController();
 
 $requestUri = $_SERVER['REQUEST_URI'];  
 $requestMethod = $_SERVER['REQUEST_METHOD'];
-echo '$requestUri: ' . $requestUri . '<br>';
+
+
 if ($requestUri == '/' && $requestMethod == 'GET') {
-    $controller->showHome(); 
+    $productController->showHome(); 
 } elseif ($requestUri == '/login.php' && $requestMethod == 'GET') {
     $authController->showLoginForm(); 
 }  elseif (preg_match('/^\/product-details\/(\d+)$/', $requestUri, $matches) && $requestMethod == 'GET') {
-    $controller->showProduct($matches[1]);  
+    $productController->showProduct($matches[1]);  
 } elseif ($requestUri == '/register.php' && $requestMethod == 'GET') {
     $authController->showRegisterForm();
 } elseif ($requestUri == '/register' && $requestMethod == 'POST') {

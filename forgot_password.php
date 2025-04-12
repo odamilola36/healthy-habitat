@@ -1,20 +1,3 @@
-<?php
-    $currentYear = date('Y');
-?>
-<?php error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-?>
-<?php
-    $formSuccess = false;
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-
-            // if (!empty($name) && !empty($email) && !empty($email)) {
-            //     $formSuccess = true;
-            // }
-    } 
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
