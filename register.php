@@ -55,7 +55,7 @@
                 <select id="user_type" name="user_type" required>
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
-                </select><br><br>
+                </select>
 
                 <button type="submit" class= "btn" name="submit">Register</button>
                 <!-- <input type="submit" value="Register"> -->
