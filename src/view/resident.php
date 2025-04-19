@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Healthy Habitat Network</title>
+    <title>Product Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
@@ -11,19 +11,10 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Healthy Habitat Network</a>
-            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button> -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register.php">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login.php">Login</a>
+                        <a class="nav-link active" href="resident.php">Home</a>
                     </li>
                 </ul>
             </div>
@@ -34,13 +25,11 @@
         <?php
             if (!empty($products)) {
                 echo '<h2>Health & Wellness Products</h2>';
-                // foreach ($products as $product) {
                 $count = 0;
                 foreach ($products as $index => $product) {
                     if ($count % 3 === 0) {
                         echo '<div class="row">';
                     }
-                    // echo '<div class="row">';
                         echo '<div class="col-md-4">';    
                             echo '<div class="card">';
                                 echo '<img src="images/product1.jpg" class="card-img-top" alt="Product">';
@@ -48,7 +37,7 @@
                                     echo '<h5 class="card-title">' . $product['name'] . '</h5>';
                                     echo '<p class="card-text">' . $product['description'] . '</p>';
                                     echo '<p><strong>Price: </strong>' . $product['price'] . '</p>';
-                                    echo '<a href="product-details/'. urlencode($product['id']) . '" class="btn btn-success btn-sm">View More...</a>';
+                                    echo '<a href="product-details.php?id='. urlencode($product['id']) . '" class="btn btn-success btn-sm">View More...</a>';
                                 echo '</div>';
                             echo '</div>';
                         echo '</div>';
@@ -58,12 +47,10 @@
                     if ($count % 3 === 0 || $index === array_key_last($products)) {
                         echo '</div>'; 
                     }
-                    // echo '</div>';
                 }
             } else {
                 echo "No products found";
             }
         ?>
     </div>
-
 <?php include("../src/include/footer.php");?>

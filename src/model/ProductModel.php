@@ -8,15 +8,15 @@ class ProductModel {
     }
 
     public function getAllProducts() {
-        // $sql = "SELECT * FROM products";
-        // $result = $this->db->query($sql);
+        $sql = "SELECT * FROM products";
+        $result = $this->db->query($sql);
 
         // if ($result) {
-        //     return $result->fetch_all(MYSQLI_ASSOC);
+            return $result->fetch_all(MYSQLI_ASSOC);
         // } else {
         //     return [];
         // }
-        return [];
+        // return [];
     }
 
     public function getProductById($id) {

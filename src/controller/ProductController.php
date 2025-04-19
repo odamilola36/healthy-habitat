@@ -19,6 +19,12 @@ class ProductController {
         include __DIR__ . '/../view/product-details.php';
     }
 
+    public function showResidents() {
+        $products = $this->productModel->getAllProducts();
+
+        include __DIR__ . '/../view/resident.php';
+    }
+    
     public function createProduct($name, $description, $category, $price, $health_benefits, $certifications, $business_id) {
         $result =$this->productModel->createProduct($name, $description, $category, $price, $health_benefits, $certifications, $business_id);
         
