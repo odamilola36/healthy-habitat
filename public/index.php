@@ -15,7 +15,7 @@ $db = Database::getInstance()->getConnection();
 $productController = new ProductController();
 $authController = new AuthController();
 
-$requestUri = $_SERVER['REQUEST_URI'];  
+$requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 
@@ -23,13 +23,14 @@ if (($requestUri == '/' || $requestUri == '/index.php') && $requestMethod == 'GE
     $productController->showHome();
 } elseif ($requestUri == '/login.php' && $requestMethod == 'GET') {
     $authController->showLoginForm();
-}  elseif (preg_match('/^\/product-details\/(\d+)$/', $requestUri, $matches) && $requestMethod == 'GET') {
+} elseif (preg_match('/^\/product-details\/(\d+)$/', $requestUri, $matches) && $requestMethod == 'GET') {
     $productController->showProduct($matches[1]);
 } elseif ($requestUri == '/register.php' && $requestMethod == 'GET') {
     $authController->showRegisterForm();
-} elseif ($requestUri == '/register' && $requestMethod == 'POST') {
-    $controller = new ResidentController();
-    $controller->registerResident($_POST);
+} elseif ($requestUri == '/register.php' && $requestMethod == 'POST') {
+    $authController->register($_POST);
+} elseif ($requestUri == '/login.php' && $requestMethod == 'POST') {
+    $authController->login($_POST);
 } elseif ($requestUri == '/resident.php' && $requestMethod == 'GET') {
     $productController->showResidents();
 } elseif ($requestUri == '/council-page.php' && $requestMethod == 'GET') {
