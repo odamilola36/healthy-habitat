@@ -36,7 +36,7 @@
             </ul>
         </div>
 
-        <div class="ml-64 flex-1 overflow-y-auto p-8 bg-gray-100" id="contentArea">
+        <div class="ml-64 flex-1 overflow-y-auto p-8 bg-gray-100">
             <h2 class="text-3xl font-semibold mb-4">Welcome!</h2>
             <p class="text-gray-700">Select an item from the menu.</p>
         </div>
