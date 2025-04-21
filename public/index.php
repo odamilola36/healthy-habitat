@@ -32,8 +32,14 @@ if (($requestUri == '/' || $requestUri == '/index.php') && $requestMethod == 'GE
     $controller->registerResident($_POST);
 } elseif ($requestUri == '/resident.php' && $requestMethod == 'GET') {
     $productController->showResidents();
-} elseif ($requestUri == '/council.php' && $requestMethod == 'GET') {
-    include __DIR__ . '/../src/view/council.php';
+} elseif ($requestUri == '/council-page.php' && $requestMethod == 'GET') {
+    include __DIR__ . '/../src/view/council-page.php';
+} elseif ($requestUri == '/businesses.php' && $requestMethod == 'GET') {
+    include __DIR__ . '/../src/view/businesses.php';
+} elseif ($requestUri == '/areas.php' && $requestMethod == 'GET') {
+    include __DIR__ . '/../src/view/areas.php';
+} elseif ($requestUri == '/business-page.php' && $requestMethod == 'GET') {
+    include __DIR__ . '/../src/view/business-page.php';
 } else {
     // 404 Not Found
     header("HTTP/1.0 404 Not Found");
