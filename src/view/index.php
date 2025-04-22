@@ -668,7 +668,7 @@
                     </a>
                     <div class="p-5">
                         <a href="product-details/<?= urlencode($product['id']) ?>">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                                 <?= htmlspecialchars($product['name']) ?>
                             </h5>
                         </a>
@@ -700,6 +700,7 @@
             echo "No products found";
         }
         ?>
+    </div>
     </div>
 
     <footer class="bg-dark text-white text-center py-3">

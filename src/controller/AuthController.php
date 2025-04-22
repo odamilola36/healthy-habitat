@@ -83,12 +83,17 @@ class AuthController
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['logged_in'] = true;
 
-                if ($user['role'] == 'council') {
-                    header('Location: /council_dashboard.php');
+                $returnTo = $_SESSION['returnTo'];
+
+                if ($returnTo) {
+                    header('Location: ' . $returnTo);
+                    $_SESSION['returnTo'] = null;
+                } else if ($user['role'] == 'council') {
+                    header('Location: /council_page.php');
                 } elseif ($user['role'] == 'business') {
-                    header('Location: /business_dashboard.php');
+                    header('Location: /businesses.php');
                 } elseif ($user['role'] == 'resident') {
-                    header('Location: /resident_dashboard.php');
+                    header('Location: /resident.php');
                 }
                 exit();
             } else {

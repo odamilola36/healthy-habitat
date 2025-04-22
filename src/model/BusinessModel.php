@@ -17,4 +17,22 @@ class BusinessModel
         $stmt->execute();
         return $stmt->affected_rows > 0;
     }
+
+    public function getBusinessByUserId($id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM businesses WHERE user_id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    public function getBusinessById($id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM businesses WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 }
