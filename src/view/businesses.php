@@ -651,7 +651,6 @@
                 </li>
             </ul>
         </div>
-
         <div class="ml-[12vw] w-[80vw] mx-auto mt-20 px-10 flex-1 overflow-y-auto  bg-gray-100 border" id="contentArea">
             <?php
             if (!empty($products)) {

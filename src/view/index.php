@@ -649,7 +649,7 @@
         </div>
     </nav>
 
-    <div class="w-5/6 mx-auto mt-20">
+    <div class="w-5/6 mx-auto mt-20 mb-20">
         <h3 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
                 class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Healthy Habitat
                 Network</span></h3>
@@ -688,7 +688,6 @@
                         </a>
                     </div>
                 </div>
-                <!-- </div> -->
                 <?php
                 $count++;
 
@@ -703,10 +702,4 @@
     </div>
     </div>
 
-    <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2025 Healthy Habitat Network. All rights reserved.</p>
-    </footer>
-
-</body>
-
-</html>
+<?php include("../src/include/footer.php");?>
