@@ -1,16 +1,16 @@
 -- Products Table
 CREATE TABLE products (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) UNIQUE,
-    description TEXT,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    description TEXT NOT NULL,
     pricing_category ENUM('affordable', 'moderate', 'premium') NOT NULL,
-    price DECIMAL(10, 2),
-    health_benefits TEXT,
-    certifications TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    health_benefits TEXT NOT NULL,
+    certifications TEXT NOT NULL,
     product_type ENUM('product', 'services') NOT NULL,
-    quantity INT,
-    business_id INT,
-    prod_cat_id INT,
+    quantity INT NOT NULL,
+    business_id INT NOT NULL,
+    prod_cat_id INT NOT NULL,
     FOREIGN KEY (business_id) REFERENCES businesses(id),
     FOREIGN KEY (prod_cat_id) REFERENCES product_category(id)
 );
@@ -199,9 +199,12 @@ CREATE TABLE residents_interest (
 -- Votes Table
 CREATE TABLE votes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    resident_id INT,
-    product_id INT,
-    vote BOOLEAN,
+    resident_id INT NOT NULL,
+    product_id INT NOT NULL,
+    vote BOOLEAN NOT NULL,
     FOREIGN KEY (resident_id) REFERENCES residents(id),
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
+
+-- ALTER TABLE votes
+-- ADD UNIQUE KEY resident_product_unique (resident_id, product_id);

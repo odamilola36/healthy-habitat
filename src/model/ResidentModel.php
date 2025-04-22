@@ -16,4 +16,14 @@ class ResidentModel
         $stmt->execute();
         return $stmt->affected_rows > 0;
     }
+
+    public function getResidentByUserId($userId)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM residents WHERE user_id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
 }

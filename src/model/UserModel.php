@@ -16,6 +16,13 @@ class UserModel
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+    public function findUserById($username)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->bind_param("i", $username);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
 
     public function createUser($email, $password, $role, $telephone, $city, $postcode, $address)
     {

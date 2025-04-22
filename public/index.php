@@ -31,18 +31,28 @@ if (($requestUri == '/' || $requestUri == '/index.php') && $requestMethod == 'GE
     $authController->register($_POST);
 } elseif ($requestUri == '/login.php' && $requestMethod == 'POST') {
     $authController->login($_POST);
+} elseif ($requestUri == '/product-details/vote.php' && $requestMethod == 'POST') {
+    $productController->vote($_POST);
 } elseif ($requestUri == '/resident.php' && $requestMethod == 'GET') {
     $productController->showResidents();
 } elseif ($requestUri == '/council-page.php' && $requestMethod == 'GET') {
     include __DIR__ . '/../src/view/council-page.php';
 } elseif ($requestUri == '/businesses.php' && $requestMethod == 'GET') {
-    include __DIR__ . '/../src/view/businesses.php';
+    $productController->showBusinessHome();
+} elseif ($requestUri == '/logout.php' && $requestMethod == 'GET') {
+    $authController->logout();
+} elseif ($requestUri == '/add-product.php' && $requestMethod == 'GET') {
+    $productController->showAddProductForm();
+} elseif ($requestUri == '/add-product.php' && $requestMethod == 'POST') {
+    $productController->createProduct($_POST);
 } elseif ($requestUri == '/areas.php' && $requestMethod == 'GET') {
     include __DIR__ . '/../src/view/areas.php';
 } elseif ($requestUri == '/business-page.php' && $requestMethod == 'GET') {
     include __DIR__ . '/../src/view/business-page.php';
 } else {
     // 404 Not Found
+
     header("HTTP/1.0 404 Not Found");
+    echo "$requestUri";
     echo "404 Page not found";
 }
