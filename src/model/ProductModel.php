@@ -21,7 +21,7 @@ class ProductModel
         ];
 
         $allowedOperators = ['=', '!=', '<', '>', 'LIKE'];
-        $sql = "SELECT * FROM products";
+        $sql = "SELECT p.*, COUNT(v.vote) AS positive_votes FROM products p LEFT JOIN votes v ON p.id = v.product_id AND v.vote = 1";
         $params = [];
         $types = '';
 
@@ -47,6 +47,8 @@ class ProductModel
                 $types .= $type;
             }
         }
+
+        $sql .= " GROUP BY p.id ORDER BY positive_votes DESC";
 
         $stmt = $this->db->prepare($sql);
 
