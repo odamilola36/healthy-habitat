@@ -35,4 +35,17 @@ class BusinessModel
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+
+    public function getBusinessAndUsersByIds($ids)
+    {
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $types = str_repeat('i', count($ids));
+
+        $stmt = $this->db->prepare("SELECT * FROM businesses JOIN users ON businesses.user_id = users.id WHERE businesses.id IN ($placeholders)");
+        $stmt->bind_param($types, ...$ids);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }

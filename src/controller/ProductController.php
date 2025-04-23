@@ -8,6 +8,7 @@ class ProductController
     private $residentModel;
     private $councilModel;
     private $areaModel;
+    private $businessAreaModel;
 
     public function __construct()
     {
@@ -16,6 +17,7 @@ class ProductController
         $this->residentModel = new ResidentModel();
         $this->councilModel = new CouncilModel();
         $this->areaModel = new AreaModel();
+        $this->businessAreaModel = new BusinessAreaModel();
     }
     public function showHome()
     {
@@ -187,9 +189,13 @@ class ProductController
         $userId = $_SESSION['user_id'];
         $council = $this->councilModel->getCouncilByUserId($userId);
         $areas = $this->areaModel->getAreasByCouncilId($council['id']);
-        $products = $this->productModel->getAllProductsForBusiness($council['id']);
+        $areaIds = array_map(fn($obj) => $obj['id'], $areas);
+        $businessAreas = $this->businessAreaModel->getBusinessAreaByAreaIds($areaIds);
+        $businessIds = array_map(fn($obj) => $obj['business_id'], $businessAreas);
+        file_put_contents('debug.log', print_r($businessIds, true), FILE_APPEND);
+        $products = $this->productModel->getAllProductsByBusinessIds($businessIds);
 
-        file_put_contents('debug.log', data: print_r($products, true));
+        file_put_contents('debug.log', print_r($products, true), FILE_APPEND);
 
 
         include __DIR__ . '/../view/council-page.php';
@@ -209,9 +215,11 @@ class ProductController
         if (isset($_SESSION['user_id'])) {     
             $council = $this->councilModel->getCouncilByUserId($_SESSION['user_id']);
             if ($council) {
-                $area = $this->areaModel->getAreaByName($name);
+                $area = $this->areaModel->getAreaByNameCounty($name, $county);
                 if ($area) {
-                    echo "area already exist";
+                    $_SESSION['error'] = 'Area already exists!';
+                    header('Location: /add-area.php');
+                    exit;
                 }
 
                 $councilId = $council['id'];
@@ -221,7 +229,7 @@ class ProductController
                     $county,
                     $country
                 );
-
+                $_SESSION['success'] = 'Area added successfully!';
                 header('Location: /add-area.php');
                 exit;
             } else {
@@ -234,13 +242,77 @@ class ProductController
         }
     }
 
-    public function showArea()
+    public function showAreas()
     {
         $userId = $_SESSION['user_id'];
         $council = $this->councilModel->getCouncilByUserId($userId);
-        file_put_contents('debug.log', data: print_r($council, true));
         $areas = $this->areaModel->getAreasByCouncilId($council['id']);
-        // file_put_contents('debug.log', data: print_r($areas, true));
+
         include __DIR__ . '/../view/areas.php';
+    }
+
+    public function showBusinesses()
+    {
+        $userId = $_SESSION['user_id'];
+        $council = $this->councilModel->getCouncilByUserId($userId);
+        $areas = $this->areaModel->getAreasByCouncilId($council['id']);
+        $areaIds = array_map(fn($obj) => $obj['id'], $areas);
+        $businessAreas = $this->businessAreaModel->getBusinessAreaByAreaIds($areaIds);
+        $businessIds = array_map(fn($obj) => $obj['business_id'], $businessAreas);
+        $businesses = $this->businessModel->getBusinessAndUsersByIds($businessIds);
+
+        include __DIR__ . '/../view/businesses.php';
+    }
+
+    public function showAddCategoryForm()
+    {
+        include __DIR__ . '/../view/add-category.php';
+    }
+
+    public function createCategory($postData)
+    {
+        $name = $postData['name'];
+
+        if (isset($_SESSION['user_id'])) {     
+            $council = $this->councilModel->getCouncilByUserId($_SESSION['user_id']);
+            if ($council) {
+                $category = $this->productModel->getCategoryByName($name);
+                if ($category) {
+                    $_SESSION['error'] = 'Category already exists!';
+                    header('Location: /add-category.php');
+                    exit;
+                }
+
+                $councilId = $council['id'];
+                $this->productModel->createCategory($name);
+                $_SESSION['success'] = 'Category added successfully!';
+                header('Location: /add-category.php');
+                exit;
+            } else {
+                header('Location: /login.php');
+                exit;
+            }
+        } else {
+            header('Location: /login.php');
+            exit;
+        }
+    }
+
+    public function showCategories()
+    {
+        $categories = $this->productModel->getAllCategories();
+
+        include __DIR__ . '/../view/categories.php';
+    }
+
+    public function showEditProductForm($id)
+    {
+        // file_put_contents('debug.log', print_r($id, true), FILE_APPEND);
+        $product = $this->productModel->getProductAndCategoryById($id);
+        // $business = $this->businessModel->getBusinessById($product['business_id']);
+        file_put_contents('debug.log', print_r($product, true), FILE_APPEND);
+        $categories = $this->productModel->getAllCategories();
+
+        include __DIR__ . '/../view/edit-product.php';
     }
 }

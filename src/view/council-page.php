@@ -1,3 +1,6 @@
+<?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,10 +9,10 @@
     <title>Product Details</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-<nav class="bg-white border-gray-200 dark:bg-emerald-600">
+<body class="min-h-screen flex flex-col">
+    <nav class="bg-white border-gray-200 dark:bg-emerald-600">
         <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
-            <div class="flex flex-row">
+            <div class="flex flex-row">               
                 <svg class="size-16 rounded-md bg-yellow-500" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     width="1024" height="1024" viewBox="0 0 1000 1000">
                     <path
@@ -617,10 +620,10 @@
         </div>
     </nav>
 
-    <div class="flex h-screen">
+    <div class="flex flex-1">
         <div class="w-64 bg-gray-100 p-6 shadow-md">
             <ul class="space-y-4">
-                <li class="cursor-pointer">
+            <li class="cursor-pointer <?= $currentPage === 'council-page.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
                     <a href="council-page.php" class="hover:text-emerald-600 font-medium">Home</a>
                 </li>
                 <li class="cursor-pointer">
@@ -630,12 +633,18 @@
                     <a href="areas.php" class="hover:text-emerald-600 font-medium">Areas</a>
                 </li>
                 <li class="cursor-pointer">
-                    <a href="add-area.php" class="hover:text-emerald-600 font-medium">Add Areas</a>
+                    <a href="add-area.php" class="hover:text-emerald-600 font-medium">Add Area</a>
+                </li>
+                <li class="cursor-pointer">
+                    <a href="categories.php" class="hover:text-emerald-600 font-medium">Categories</a>
+                </li>
+                <li class="cursor-pointer">
+                    <a href="add-category.php" class="hover:text-emerald-600 font-medium">Add Category</a>
                 </li>
             </ul>
         </div>
 
-        <div class="p-8 flex-1 overflow-y-auto">
+        <div class="p-8 flex-1">
             <?php
             if (!empty($products)) {
                 $count = 0;
@@ -651,7 +660,7 @@
                         </a>
                         <div class="p-5">
                             <a href="product-details/<?= urlencode($product['id']) ?>">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-400">
                                     <?= htmlspecialchars($product['name']) ?>
                                 </h5>
                             </a>
@@ -659,7 +668,14 @@
                                 <?= htmlspecialchars($product['description']) ?>
                             </p>
                             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Price:
-                                </strong>£ <?= htmlspecialchars($product['price']) ?></p>
+                                </strong>£ <?= htmlspecialchars($product['price']) ?>
+                            </p>
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Upvotes:
+                                </strong> <?= htmlspecialchars($product['true_votes']) ?>
+                            </p>
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Downvotes:
+                                </strong> <?= htmlspecialchars($product['false_votes']) ?>
+                            </p>
                             <a href="product-details/<?= urlencode($product['id']) ?>"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-yellow-400 rounded-lg ">
                                 View more

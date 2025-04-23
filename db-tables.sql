@@ -50,7 +50,8 @@ CREATE TABLE areas (
     country VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (council_id) REFERENCES local_council(id) ON DELETE CASCADE
+    FOREIGN KEY (council_id) REFERENCES local_council(id) ON DELETE CASCADE,
+    UNIQUE KEY name_county_unique (name, county) 
 );
 
 -- Residents Table

@@ -1,3 +1,6 @@
+<?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -624,11 +627,11 @@
     <div class="flex h-screen">
         <div class="w-[15vw] text-gray p-6 bg-gray-100">
             <ul class="space-y-4">
-                <li class="cursor-pointer">
-                    <a href="#" class="hover:text-emerald-600 font-medium">Home</a>
+                <li class="cursor-pointer <?= $currentPage === 'business-page.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
+                    <a href="business-page.php" class="hover:text-emerald-600 font-medium">Home</a>
                 </li>
                 <li class="cursor-pointer">
-                    <a href="/add-product.php" class="hover:text-emerald-600 font-medium">Add Products</a>
+                    <a href="add-product.php" class="hover:text-emerald-600 font-medium">Add Products</a>
                 </li>
             </ul>
         </div>
@@ -649,7 +652,7 @@
                         </a>
                         <div class="p-5">
                             <a href="product-details/<?= urlencode($product['id']) ?>">
-                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray">
                                     <?= htmlspecialchars($product['name']) ?>
                                 </h5>
                             </a>
@@ -661,6 +664,15 @@
                             <a href="product-details/<?= urlencode($product['id']) ?>"
                                 class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-yellow-400 rounded-lg ">
                                 View more
+                                <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                </svg>
+                            </a>
+                            <a href="edit-product/<?= urlencode($product['id']) ?>"
+                                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-yellow-400 rounded-lg ">
+                                Edit Product
                                 <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

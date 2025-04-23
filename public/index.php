@@ -46,13 +46,23 @@ if (($requestUri == '/' || $requestUri == '/index.php') && $requestMethod == 'GE
 } elseif ($requestUri == '/add-product.php' && $requestMethod == 'POST') {
     $productController->createProduct($_POST);
 } elseif ($requestUri == '/areas.php' && $requestMethod == 'GET') {
-    $productController->showArea();
+    $productController->showAreas();
 } elseif ($requestUri == '/add-area.php' && $requestMethod == 'GET') {
     $productController->showAddAreaForm();
 } elseif ($requestUri == '/add-area.php' && $requestMethod == 'POST') {
     $productController->createArea($_POST);
 } elseif ($requestUri == '/businesses.php' && $requestMethod == 'GET') {
-    include __DIR__ . '/../src/view/businesses.php';
+    $productController->showBusinesses();
+} elseif ($requestUri == '/add-category.php' && $requestMethod == 'GET') {
+    $productController->showAddCategoryForm();
+} elseif ($requestUri == '/add-category.php' && $requestMethod == 'POST') {
+    $productController->createCategory($_POST);
+} elseif ($requestUri == '/categories.php' && $requestMethod == 'GET') {
+    $productController->showCategories();
+} elseif (preg_match('/^\/edit-product\/(\d+)$/', $requestUri, $matches) && $requestMethod == 'GET') {
+    $productController->showEditProductForm($matches[1]);
+} elseif ($requestUri == '/edit-product.php' && $requestMethod == 'POST') {
+    $productController->createProduct($_POST);
 } else {
     // 404 Not Found
 

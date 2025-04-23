@@ -3,17 +3,15 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-
-<body class="flex flex-col min-h-screen font-sans">
-    <nav class="bg-emerald-600">
-        <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-2">
+<body class="min-h-screen flex flex-col">
+    <nav class="bg-white border-gray-200 dark:bg-emerald-600">
+        <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
             <div class="flex flex-row">
                 <svg class="size-16 rounded-md bg-yellow-500" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     width="1024" height="1024" viewBox="0 0 1000 1000">
@@ -616,144 +614,64 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         Network</p>
                 </div>
             </div>
-            <div
-                class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-                <a href="/logout.php"
-                    class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
+            <div class="flex flex-row w-24 rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                <a href="/logout.php" class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
             </div>
         </div>
     </nav>
 
-    <div class="flex h-full">
-        <div class="w-[15vw] text-gray p-6 bg-gray-100">
+    <div class="flex flex-1">
+        <div class="w-64 bg-gray-100 p-6 shadow-md">
             <ul class="space-y-4">
                 <li class="cursor-pointer">
-                    <a href="business-page.php" class="hover:text-emerald-600 font-medium">Home</a>
+                    <a href="council-page.php" class="hover:text-emerald-600 font-medium">Home</a>
                 </li>
-                <li class="cursor-pointer <?= $currentPage === 'add-product.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
-                    <a href="add-product.php" class="hover:text-emerald-600 font-medium">Add Products</a>
+                <li class="cursor-pointer">
+                    <a href="businesses.php" class="hover:text-emerald-600 font-medium">Business</a>
+                </li>
+                <li class="cursor-pointer">
+                    <a href="areas.php" class="hover:text-emerald-600 font-medium">Areas</a>
+                </li>
+                <li class="cursor-pointer">
+                    <a href="add-area.php" class="hover:text-emerald-600 font-medium">Add Area</a>
+                </li>
+                <li class="cursor-pointer <?= $currentPage === 'categories.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
+                    <a href="categories.php" class="hover:text-emerald-600 font-medium">Categories</a>
+                </li>
+                <li class="cursor-pointer">
+                    <a href="add-category.php" class="hover:text-emerald-600 font-medium">Add Category</a>
                 </li>
             </ul>
         </div>
 
-        <!-- <div class="ml-[12vw] w-[80vw] mx-auto mt-20 px-10 flex-1 overflow-y-auto  bg-gray-100 border" id="contentArea"> -->
-        <div class="p-8 flex-1 overflow-y-auto">
-            <div class="w-5/6 m-auto mt-20">
-                <div class="inline-flex items-center justify-center w-full">
-                    <hr class="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-                    <span
-                        class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 left-1/2 dark:text-white dark:bg-gray-900">Add
-                        Product</span>
-                </div>
-                <form class="max-w-md mx-auto p-10" action="/add-product.php" method="POST"
-                    enctype="multipart/form-data">
-                    <div class=" relative z-0 w-full mb-5 group">
-                        <input type="text" name="name" id="name"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder=" " required />
-                        <label for="name"
-                            class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Name
-                        </label>
-                    </div>
-                    <div class="relative z-0 w-full mb-5 group">
-                        <textarea type="text" name="description" id="description"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder="" required>
-                        </textarea>
-                        <label for="description"
-                            class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Description
-                        </label>
-                    </div>
-                    <div class="relative z-0 w-full mb-5 group">
-                        <textarea type="text" name="benefit" id="benefits"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder="" required>
-                        </textarea>
-                        <label for="benefits"
-                            class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Health Benefits
-                        </label>
-                    </div>
-                    <div class="grid md:grid-cols-2 md:gap-6">
-                        <div class="relative z-0 w-full mb-5 group">
-                            <input type="number" name="price" id="price" step="0.01"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                                placeholder=" " required />
-                            <label for="price"
-                                class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Price
-                            </label>
-                        </div>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <input type="number" step="1" name="quantity" id="quantity"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                                placeholder=" " required />
-                            <label for="quantity"
-                                class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Quantity
-                            </label>
+        <div class="p-8 flex-1">
+            <?php
+            if (!empty($categories)) {
+                $count = 0;
+                foreach ($categories as $index => $category) {
+                    if ($count % 3 === 0) {
+                        echo '<div class="flex flex-row gap-4 py-2">';
+                    }
+                    ?>
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-sm w-full sm:w-1/2 md:w-1/3 lg:w-1/3">
+                        <div class="p-5 text-center">
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                <?= htmlspecialchars($category['name']) ?>
+                            </p>
                         </div>
                     </div>
-                    <div class="relative z-0 w-full mb-5 group">
-                        <select name="pricing_category" id="pricingCategory"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                            required">
-                            <option value="" disabled selected>select pricing category</option>
-                            <option value="affordable">Affordable</option>
-                            <option value="moderate">Moderate</option>
-                            <option value="premium">Premium</option>
-                        </select>
-                    </div>
-                    <div class="relative z-0 w-full mb-5">
-                        <select name="category" id="category"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                            required>
-                            <option value="" disabled selected>Select category</option>
-                            <?php foreach ($categories as $cat): ?>
-                                <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="relative z-0 w-full mb-5">
-                        <select name="type" id="type"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                            required">
-                            <option value="" disabled selected>select product type</option>
-                            <option value="product">Product</option>
-                            <option value="service">Service</option>
-                        </select>
-                    </div>
-                    <div class="relative z-0 w-full mb-5">
-                        <input type="text" name="certification" id="certification"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder=" " required />
-                        <label for="certification"
-                            class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Certification
-                        </label>
-                    </div>
-                    <div class="relative z-0 w-full mb-5">
-                        <input type="file" name="image" id="image"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder=" " required />
-                        <label for="image"
-                            class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Product Image
-                        </label>
-                    </div>
-                    <div class="flex flex-row place-content-center">
-                        <button type="submit"
-                            class="text-white pl-8 pr-8 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-400 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-400 dark:focus:ring-yellow-400">Submit</button>
-                    </div>
+                    <?php
+                    $count++;
 
-                </form>
-
-
-
-            </div>
+                    if ($count % 3 === 0 || $index === array_key_last($categories)) {
+                        echo '</div>';
+                    }
+                }
+            } else {
+                echo "No areas found!!!";
+            }
+            ?>
         </div>
     </div>
 
-    <?php include("../src/include/footer.php"); ?>
+<?php include("../src/include/footer.php");?>

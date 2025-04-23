@@ -1,3 +1,6 @@
+<?php
+$currentPage = basename($_SERVER['PHP_SELF']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,9 +11,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="flex flex-col min-h-screen font-sans">
-    <nav class="bg-emerald-600">
-        <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-2">
+<body class="min-h-screen flex flex-col">
+    <nav class="bg-white border-gray-200 dark:bg-emerald-600">
+         <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
             <div class="flex flex-row">
                 <svg class="size-16 rounded-md bg-yellow-500" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     width="1024" height="1024" viewBox="0 0 1000 1000">
@@ -613,15 +616,13 @@
                         Network</p>
                 </div>
             </div>
-            <div
-                class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-                <a href="/logout.php"
-                    class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
+            <div class="flex flex-row w-24 rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                <a href="/logout.php" class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
             </div>
         </div>
     </nav>
-
-    <div class="flex h-screen">
+ 
+    <div class="flex flex-1">
         <div class="w-64 bg-gray-100 p-6 shadow-md">
             <ul class="space-y-4">
                 <li class="cursor-pointer">
@@ -633,15 +634,35 @@
                 <li class="cursor-pointer">
                     <a href="areas.php" class="hover:text-emerald-600 font-medium">Areas</a>
                 </li>
+                <li class="cursor-pointer <?= $currentPage === 'add-area.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
+                    <a href="add-area.php" class="hover:text-emerald-600 font-medium">Add Area</a>
+                </li>
                 <li class="cursor-pointer">
-                    <a href="add-area.php" class="hover:text-emerald-600 font-medium">Add Areas</a>
+                    <a href="categories.php" class="hover:text-emerald-600 font-medium">Categories</a>
+                </li>
+                <li class="cursor-pointer">
+                    <a href="add-category.php" class="hover:text-emerald-600 font-medium">Add Category</a>
                 </li>
             </ul>
         </div>
 
-        <!-- <div class="ml-[12vw] w-[80vw] mx-auto mt-20 px-10 flex-1 overflow-y-auto  bg-gray-100 border" id="contentArea"> -->
-        <div class="p-8 flex-1 overflow-y-auto">
+        <div class="p-8 flex-1">
             <div class="w-5/6 m-auto mt-20">
+
+                <?php if (isset($_SESSION['success'])): ?>
+                    <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
+                        <?= htmlspecialchars($_SESSION['success']) ?>
+                    </div>
+                    <?php unset($_SESSION['success']); ?>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="bg-red-100 text-red-800 p-3 rounded mb-4">
+                        <?= htmlspecialchars($_SESSION['error']) ?>
+                    </div>
+                    <?php unset($_SESSION['error']); ?>
+                <?php endif; ?>
+
                 <div class="inline-flex items-center justify-center w-full">
                     <hr class="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     <span
