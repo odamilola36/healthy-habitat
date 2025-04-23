@@ -11,7 +11,6 @@ class BusinessModel
 
     public function createBusiness($userId, $businessName, $regNumber)
     {
-        echo "Creating business with userId: $userId, businessName: $businessName, regNumber: $regNumber\n";
         $stmt = $this->db->prepare("INSERT INTO businesses (user_id, business_name, registration_number) VALUES (?, ?, ?)");
         $stmt->bind_param("iss", $userId, $businessName, $regNumber);
         $stmt->execute();
@@ -34,5 +33,16 @@ class BusinessModel
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_assoc();
+    }
+
+    public function businessFieldExists($fieldName, $value)
+    {
+        $query = "SELECT COUNT(*) FROM businesses WHERE $fieldName = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $value);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        return $count > 0;
     }
 }

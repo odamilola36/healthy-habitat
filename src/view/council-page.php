@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+
+
+<body class="flex flex-col min-h-screen font-sans">
+   
 <nav class="bg-white border-gray-200 dark:bg-emerald-600">
         <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
             <div class="flex flex-row">
@@ -685,4 +689,4 @@
         </div>
     </div>
 
-<?php include("../src/include/footer.php");?>
+    <?php include("../src/include/footer.php"); ?>

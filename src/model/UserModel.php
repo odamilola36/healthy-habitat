@@ -31,4 +31,14 @@ class UserModel
         $stmt->execute();
         return $stmt->insert_id;
     }
+    function fieldExists($fieldName, $value)
+    {
+        $query = "SELECT COUNT(*) FROM users WHERE $fieldName = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $value);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        return $count > 0;
+    }
 }

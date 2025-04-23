@@ -38,15 +38,34 @@ class AuthController
     public function register($postData)
     {
 
+        header('Content-Type: application/json');
         $this->userModel->findUserByUsername($postData['email']);
         $password = password_hash($postData['password'], PASSWORD_BCRYPT);
 
+        $errors = [];
+        if ($this->userModel->fieldExists('email', $postData['email'])) {
+            $errors['email'] = "Email already exists.";
+        }
+        if ($this->userModel->fieldExists('telephone', $postData['telephone'])) {
+            $errors['telephone'] = "Phone number already exists.";
+        }
+        if ($this->businessModel->businessFieldExists('business_name', $postData['businessName'])) {
+            $errors['bname'] = "Business name already exists.";
+        }
+        if ($this->businessModel->businessFieldExists('registration_number', $postData['regNumber'])) {
+            $errors['regnum'] = "Business Registration number already exists.";
+        }
+        if ($this->councilModel->getCouncilByName($postData['councilName'])) {
+            $errors['cname'] = "Council already exists.";
+        }
 
-        var_dump($postData);
+        if (!empty($errors)) {
+            echo json_encode(['success' => false, 'errors' => $errors]);
+            exit();
+        }
 
-        // Insert user into the database
         $userId = $this->userModel->createUser(
-            $postData['email'],
+            strtolower($postData['email']),
             $password,
             $postData['role'],
             $postData['telephone'],
@@ -56,23 +75,26 @@ class AuthController
         );
 
 
-        // Insert role-specific data
         if ($postData['role'] == 'business') {
             $this->businessModel->createBusiness($userId, $postData['businessName'], $postData['regNumber']);
         } elseif ($postData['role'] == 'resident') {
             $this->residentModel->createResident($userId, $postData['firstname'], $postData['lastname'], $postData['gender'], $postData['agegroup'], $postData['area']);
+            $interests = $postData['categories'];
+            foreach ($interests as $interestId) {
+                error_log("Adding interest $interestId for user $userId");
+                $this->residentModel->createResidentInterest($userId, $interestId);
+            }
         } elseif ($postData['role'] == 'council') {
             $this->councilModel->createCouncil($userId, $postData['councilName']);
         }
 
-        // Redirect to login page after successful registration
-        header('Location: /login.php');
+        echo json_encode(['success' => true]);
         exit();
     }
 
     public function login($postData)
     {
-        $username = $_POST['username'];
+        $username = strtolower($_POST['username']);
         $password = $_POST['password'];
 
         $user = $this->userModel->findUserByUsername($username);

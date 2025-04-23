@@ -118,6 +118,12 @@ class ProductController
         $certifications = $postData['certification'];
         $image_name = null; // default
 
+        if ($this->getProductByName($name)) {
+            $addprod_error = "Product with this name already exists.";
+            header('Location: /add-product.php');
+            exit;
+        }
+
         if (isset($_SESSION['user_id'])) {
             $business = $this->businessModel->getBusinessByUserId($_SESSION['user_id']);
             if ($business) {
@@ -170,13 +176,16 @@ class ProductController
         }
     }
 
+    private function getProductByName($name)
+    {
+        return $this->productModel->getProductByName($name);
+    }
+
     public function showBusinessHome()
     {
         $userId = $_SESSION['user_id'];
         $business = $this->businessModel->getBusinessByUserId($userId);
         $products = $this->productModel->getAllProductsForBusiness($business['id']);
-
-        file_put_contents('debug.log', data: print_r($products, true));
 
 
         include __DIR__ . '/../view/business-page.php';

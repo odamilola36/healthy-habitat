@@ -650,12 +650,14 @@
         </div>
         <form class="max-w-md mx-auto" action="/login.php" method="POST">
             <div class="relative z-0 w-full mb-5 group">
-                <input type="email" name="username" id="username"
+                <input type="email" name="username" id="username" oninput="validateEmail(event)"
+                    onblur="removeError(event)"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
                     placeholder=" " required />
                 <label for="username"
                     class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
                     address</label>
+                <span class="text-red-500 text-xs" id="email-error"></span>
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <input type="password" name="password" id="password"
