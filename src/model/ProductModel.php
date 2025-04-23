@@ -9,10 +9,53 @@ class ProductModel
         $this->db = Database::getInstance()->getConnection();
     }
 
-    public function getAllProducts()
+    public function getAllProducts($key, $value, $operator)
     {
+        $allowedKeys = [
+            'name' => 'name',
+            'benefit' => 'health_benefits',
+            'price' => 'price',
+            'category' => 'pricing_category',
+            'type' => 'product_type',
+            'quantity' => 'quantity',
+        ];
+
+        $allowedOperators = ['=', '!=', '<', '>', 'LIKE'];
         $sql = "SELECT * FROM products";
-        $result = $this->db->query($sql);
+        $params = [];
+        $types = '';
+
+        if ($key && $value && $operator) {
+            if (array_key_exists($key, $allowedKeys) && in_array($operator, $allowedOperators)) {
+                $dbColumn = $allowedKeys[$key];
+
+                $type = 's';
+
+                if (in_array($key, ['price', 'quantity'])) {
+                    if (!is_numeric($value)) {
+                        die("Invalid numeric input for $key");
+                    }
+                    $type = is_float($value + 0) ? 'd' : 'i';
+                }
+
+                if ($operator === 'LIKE') {
+                    $value = "%$value%";
+                }
+
+                $sql .= " WHERE $dbColumn $operator ?";
+                $params[] = $value;
+                $types .= $type;
+            }
+        }
+
+        $stmt = $this->db->prepare($sql);
+
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
@@ -139,7 +182,8 @@ class ProductModel
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
         $types = str_repeat('i', count($ids));
 
-        $stmt = $this->db->prepare("SELECT products.*, 
+        $stmt = $this->db->prepare(
+            "SELECT products.*, 
             SUM(CASE WHEN votes.vote = TRUE THEN 1 ELSE 0 END) AS true_votes,
             SUM(CASE WHEN votes.vote = FALSE THEN 1 ELSE 0 END) AS false_votes
             FROM products
@@ -147,7 +191,7 @@ class ProductModel
             WHERE products.business_id IN ($placeholders)
             GROUP BY products.id"
         );
-            // "SELECT * FROM products JOIN votes ON products.id = votes.product_id WHERE products.business_id IN ($placeholders) GROUP BY votes.vote HAVING ");
+        // "SELECT * FROM products JOIN votes ON products.id = votes.product_id WHERE products.business_id IN ($placeholders) GROUP BY votes.vote HAVING ");
         $stmt->bind_param($types, ...$ids);
         $stmt->execute();
         $result = $stmt->get_result();

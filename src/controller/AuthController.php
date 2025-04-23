@@ -35,6 +35,11 @@ class AuthController
         include __DIR__ . '/../view/register.php';
     }
 
+    public function showNotFound()
+    {
+        include __DIR__ . '/../view/notfound.php';
+    }
+
     public function register($postData)
     {
 

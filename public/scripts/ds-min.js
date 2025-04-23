@@ -139,3 +139,27 @@ function removeError(event) {
     const errorEl = document.getElementById(`${event.target.name}-error`);
     if (errorEl && event.target.value === '') errorEl.textContent = '';
 }
+
+function searchFilters() {
+    return {
+      newFilter: { key: '', value: '' },
+      filters: [],
+      filterOptions: {
+        name: 'Name',
+        benefit: 'Benefit',
+        price: 'Price',
+        category: 'Category',
+        type: 'Type',
+        quantity: 'Quantity'
+      },
+      addFilter() {
+        if (this.newFilter.key && this.newFilter.value) {
+            this.filters.push({ ...this.newFilter });
+            this.newFilter = { key: '', operator: '=', value: '' };
+          }
+      },
+      removeFilter(index) {
+        this.filters.splice(index, 1);
+      }
+    }
+  }

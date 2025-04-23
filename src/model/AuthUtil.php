@@ -48,4 +48,12 @@ class AuthUtil
             exit;
         }
     }
+    public function requiresLogin()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['returnTo'] = $_SERVER['REQUEST_URI'];
+            header('Location: /login.php');
+            exit;
+        }
+    }
 }
