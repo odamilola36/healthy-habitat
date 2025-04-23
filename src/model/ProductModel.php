@@ -28,6 +28,17 @@ class ProductModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getProductByName($name)
+    {
+        $sql = "SELECT COUNT(*) FROM products WHERE name = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        return $count > 0;
+    }
+
     public function getAllCategories()
     {
         $sql = "SELECT * FROM product_category";
@@ -67,7 +78,7 @@ class ProductModel
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("ssssssi", $name, $description, $category, $price, $health_benefits, $certifications, $id);
 
-        return $stmt->execute();  // Return true if successful, false otherwise
+        return $stmt->execute();
     }
 
     public function deleteProduct($id)
