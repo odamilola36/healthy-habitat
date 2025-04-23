@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-
-<body class="flex flex-col min-h-screen font-sans">
-    <nav class="bg-emerald-600">
-        <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-2">
+<body>
+<nav class="bg-white border-gray-200 dark:bg-emerald-600">
+        <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
             <div class="flex flex-row">
                 <svg class="size-16 rounded-md bg-yellow-500" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     width="1024" height="1024" viewBox="0 0 1000 1000">
@@ -613,45 +611,31 @@
                         Network</p>
                 </div>
             </div>
-            <!-- <div id="mega-menu-icons" class="items-center justify-between hidden w-100 md:flex md:w-auto md:order-1">
-                <ul class="flex flex-row w-100 justify-evenly">
-                    <li class="p-2 w-24 text-center border-yellow-500 rounded-md border-2 hover:bg-emerald-300">
-                        <a href="/"
-                            class="block text-white py-2 p-10 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                            aria-current="page">Home
-                        </a>
-                    </li>
-                    <li class="p-2 w-24 text-center border-yellow-500 border-2 rounded-md hover:bg-emerald-300">
-                        <a href="/products.php"
-                            class="block py-2 text-white px-3 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700">Products
-                        </a>
-                    </li>
-                    <li class="p-2 w-24 text-center border-yellow-500 rounded-md border-2 hover:bg-emerald-300">
-                        <a href="/about.php"
-                            class="block py-2 text-white px-3 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-                    </li>
-                </ul>
-            </div> -->
-            <div
-                class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-                <a href="/logout.php"
-                    class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
+            <div class="flex flex-row w-24 rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                <a href="/logout.php" class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
             </div>
         </div>
     </nav>
 
-    <div class="flex flex-1 min-h-0">
-        <div class="w-[15vw] text-gray p-6 fixed h-full">
+    <div class="flex h-screen">
+        <div class="w-64 bg-gray-100 p-6 shadow-md">
             <ul class="space-y-4">
                 <li class="cursor-pointer">
-                    <a href="#" class="hover:text-emerald-600 font-medium">Home</a>
+                    <a href="council-page.php" class="hover:text-emerald-600 font-medium">Home</a>
                 </li>
                 <li class="cursor-pointer">
-                    <a href="/add-product.php" class="hover:text-emerald-600 font-medium">Add Products</a>
+                    <a href="businesses.php" class="hover:text-emerald-600 font-medium">Business</a>
+                </li>
+                <li class="cursor-pointer">
+                    <a href="areas.php" class="hover:text-emerald-600 font-medium">Areas</a>
+                </li>
+                <li class="cursor-pointer">
+                    <a href="add-area.php" class="hover:text-emerald-600 font-medium">Add Areas</a>
                 </li>
             </ul>
         </div>
-        <div class="ml-[12vw] w-[80vw] mx-auto mt-20 px-10 flex-1 overflow-y-auto  bg-gray-100 border" id="contentArea">
+
+        <div class="p-8 flex-1 overflow-y-auto">
             <?php
             if (!empty($products)) {
                 $count = 0;
@@ -687,7 +671,6 @@
                             </a>
                         </div>
                     </div>
-                    <!-- </div> -->
                     <?php
                     $count++;
 
@@ -696,10 +679,10 @@
                     }
                 }
             } else {
-                echo "No products found";
+                echo "No businesses found!!!";
             }
             ?>
         </div>
     </div>
 
-    <?php include("../src/include/footer.php"); ?>
+<?php include("../src/include/footer.php");?>

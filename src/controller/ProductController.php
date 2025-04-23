@@ -6,12 +6,16 @@ class ProductController
     private $productModel;
     private $businessModel;
     private $residentModel;
+    private $councilModel;
+    private $areaModel;
 
     public function __construct()
     {
         $this->productModel = new ProductModel();
         $this->businessModel = new BusinessModel();
         $this->residentModel = new ResidentModel();
+        $this->councilModel = new CouncilModel();
+        $this->areaModel = new AreaModel();
     }
     public function showHome()
     {
@@ -55,8 +59,9 @@ class ProductController
         header('Location: ' . $returnTo);
     }
 
-    public function showResidents()
+    public function showResidentHome()
     {
+        $userId = $_SESSION['user_id'];
         $products = $this->productModel->getAllProducts();
 
         include __DIR__ . '/../view/resident.php';
@@ -183,7 +188,68 @@ class ProductController
         $products = $this->productModel->getAllProductsForBusiness($business['id']);
 
 
-        include __DIR__ . '/../view/businesses.php';
+        include __DIR__ . '/../view/business-page.php';
     }
 
+    public function showCouncilPageHome()
+    {
+        $userId = $_SESSION['user_id'];
+        $council = $this->councilModel->getCouncilByUserId($userId);
+        $areas = $this->areaModel->getAreasByCouncilId($council['id']);
+        $products = $this->productModel->getAllProductsForBusiness($council['id']);
+
+        file_put_contents('debug.log', data: print_r($products, true));
+
+
+        include __DIR__ . '/../view/council-page.php';
+    }
+
+    public function showAddAreaForm()
+    {
+        include __DIR__ . '/../view/add-area.php';
+    }
+
+    public function createArea($postData)
+    {
+        $name = $postData['name'];
+        $county = $postData['county'];
+        $country = $postData['country'];
+
+        if (isset($_SESSION['user_id'])) {     
+            $council = $this->councilModel->getCouncilByUserId($_SESSION['user_id']);
+            if ($council) {
+                $area = $this->areaModel->getAreaByName($name);
+                if ($area) {
+                    echo "area already exist";
+                }
+
+                $councilId = $council['id'];
+                $this->areaModel->createArea(
+                    $councilId,
+                    $name,
+                    $county,
+                    $country
+                );
+
+                header('Location: /add-area.php');
+                exit;
+            } else {
+                header('Location: /login.php');
+                exit;
+            }
+        } else {
+            header('Location: /login.php');
+            exit;
+        }
+    }
+
+    public function showArea()
+    {
+        $userId = $_SESSION['user_id'];
+        $council = $this->councilModel->getCouncilByUserId($userId);
+        file_put_contents('debug.log', data: print_r($council, true));
+        $areas = $this->areaModel->getAreasByCouncilId($council['id']);
+        // file_put_contents('debug.log', data: print_r($areas, true));
+        include __DIR__ . '/../view/areas.php';
+    }
 }

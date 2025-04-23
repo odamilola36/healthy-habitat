@@ -621,8 +621,8 @@
         </div>
     </nav>
 
-    <div class="flex flex-1 min-h-0">
-        <div class="w-[15vw] text-gray p-6 fixed h-full">
+    <div class="flex h-full">
+        <div class="w-[15vw] text-gray p-6 bg-gray-100">
             <ul class="space-y-4">
                 <li class="cursor-pointer">
                     <a href="/businesses.php" class="hover:text-emerald-600 font-medium">Home</a>
@@ -633,7 +633,8 @@
             </ul>
         </div>
 
-        <div class="ml-[12vw] w-[80vw] mx-auto mt-20 px-10 flex-1 overflow-y-auto  bg-gray-100 border" id="contentArea">
+        <!-- <div class="ml-[12vw] w-[80vw] mx-auto mt-20 px-10 flex-1 overflow-y-auto  bg-gray-100 border" id="contentArea"> -->
+        <div class="p-8 flex-1 overflow-y-auto">
             <div class="w-5/6 m-auto mt-20">
                 <div class="inline-flex items-center justify-center w-full">
                     <hr class="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">

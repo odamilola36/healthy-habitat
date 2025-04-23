@@ -111,9 +111,9 @@ class AuthController
                     header('Location: ' . $returnTo);
                     $_SESSION['returnTo'] = null;
                 } else if ($user['role'] == 'council') {
-                    header('Location: /council_page.php');
+                    header('Location: /council-page.php');
                 } elseif ($user['role'] == 'business') {
-                    header('Location: /businesses.php');
+                    header('Location: /business-page.php');
                 } elseif ($user['role'] == 'resident') {
                     header('Location: /resident.php');
                 }
