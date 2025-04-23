@@ -7,6 +7,7 @@
     <title>Resident Registration</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="../../scripts/ds-min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 
 <body>
@@ -647,14 +648,15 @@
             <span
                 class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 left-1/2 dark:text-white dark:bg-gray-900">Register</span>
         </div>
-        <form class="max-w-md mx-auto p-10" action="/register.php" method="POST">
+        <form class="max-w-md mx-auto p-10" action="" method="POST" onsubmit="submitForm(event)" id="registration-form">
             <div class="relative z-0 w-full mb-5 group">
-                <input type="email" name="email" id="email"
+                <input type="email" name="email" id="email" oninput="validateEmail(event)" onblur="removeError(event)"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
                     placeholder=" " required />
                 <label for="email"
                     class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
                     address</label>
+                <span class="text-red-500 text-xs" id="email-error"></span>
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <input type="password" name="password" id="password"
@@ -664,12 +666,14 @@
                     class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
             </div>
             <div class="relative z-0 w-full mb-5 group">
-                <input type="password" name="repeat_password" id="floating_repeat_password"
+                <input type="password" name="password" id="re-password" oninput="validatePassword()"
+                    onblur="removeError(event)"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
                     placeholder=" " required />
                 <label for="floating_repeat_password"
                     class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm
                     password</label>
+                <span class="text-red-500 text-xs" id="password-error"></span>
             </div>
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="relative z-0 w-full mb-5 group">
@@ -691,12 +695,14 @@
             </div>
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="relative z-0 w-full mb-5 group">
-                    <input type="tel" name="telephone" id="telephone"
+                    <input type="tel" name="telephone" id="telephone" oninput="isValidUKPhoneNumber(event)"
+                        onblur="removeError(event)"
                         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
                         placeholder=" " required />
                     <label for="telephone"
                         class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Phone
                         number</label>
+                    <span class="text-red-500 text-xs" id="telephone-error"></span>
                 </div>
                 <div class="relative z-0 w-full mb-5 group">
                     <input type="text" name="postcode" id="postcode"
@@ -768,16 +774,6 @@
                     <?php endforeach; ?>
                 </select>
             </div>
-            <div class="relative z-0 w-full mb-5 hidden group resident">
-                <select name="categories"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                    id="categories" multiple required>
-                    <option value="" disabled selected>Select categories you're interested in</option>
-                    <?php foreach ($categories as $cat): ?>
-                        <option value="<?= $cat['id'] ?>"><?= htmlspecialchars($cat['name']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
             <div class="grid md:grid-cols-2 md:gap-6 hidden business">
                 <div class="relative z-0 w-full mb-5 group">
                     <input type="text" name="businessName" id="businessName"
@@ -786,6 +782,7 @@
                     <label for="businessName"
                         class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Business name</label>
+                    <span class="text-red-500 text-xs" id="bname-error"></span>
                 </div>
                 <div class="relative z-0 w-full mb-5 group">
                     <input type="text" name="regNumber" id="regNumber"
@@ -794,6 +791,7 @@
                     <label for="regNumber"
                         class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                         Registration number</label>
+                    <span class="text-red-500 text-xs" id="regnum-error"></span>
                 </div>
             </div>
             <div class="relative z-0 w-full mb-5 hidden group council">
@@ -804,12 +802,39 @@
                     class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                     Local council name
                 </label>
+                <span class="text-red-500 text-xs" id="cname-error"></span>
+            </div>
+            <div class="relative z-0 w-full mb-5 hidden group resident">
+                <div x-data='multiSelect(<?= json_encode($categories) ?>)' class="relative w-full">
+                    <template x-for="id in selected.map(s => s.id)">
+                        <input type="hidden" name="categories[]" :value="id">
+                    </template>
+                    <div @click="toggleDropdown" class="border p-2 rounded cursor-pointer bg-white">
+                        <template x-for="(item, index) in selected" :key="item.id">
+                            <span class="inline-block bg-blue-100 text-blue-800 px-2 py-1 m-1 rounded text-xs">
+                                <span x-text="item.name"></span>
+                                <button type="button" @click.stop="removeOption(index)">×</button>
+                            </span>
+                        </template>
+                        <span x-show="selected.length === 0" class="text-gray-400">Select categories...</span>
+                    </div>
+                    <div x-show="open" class="absolute z-10 bg-white border mt-1 w-full max-h-60 overflow-y-auto">
+                        <template x-for="option in options" :key="option.id">
+                            <div @click.stop="toggleOption(option)"
+                                class="p-2 hover:bg-gray-100 cursor-pointer flex justify-between">
+                                <span x-text="option.name"></span>
+                                <span x-show="selected.map(s => s.id).includes(option.id)">✔</span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
             </div>
             <div class="flex flex-row place-content-center">
                 <button type="submit"
                     class="text-white pl-8 pr-8 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-400 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-400 dark:focus:ring-yellow-400">Submit</button>
             </div>
-            <p class="m-2 text-xs justify-self-center">Already have an account? <a href="/login.php"> Login</a>
+            <p class="m-2 text-xs justify-self-center">Already have an account? <a href="/login.php" class="text-blue">
+                    Login</a>
             </p>
             <div class="mt-6">
                 <div class="relative">
@@ -822,7 +847,6 @@
                         </span>
                     </div>
                 </div>
-
                 <div class="mt-6 grid grid-cols-3 gap-3">
                     <div>
                         <a href="#"
@@ -845,8 +869,6 @@
                 </div>
             </div>
         </form>
-
-
 
     </div>
 

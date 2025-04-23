@@ -3,11 +3,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen flex flex-col">
     <nav class="bg-white border-gray-200 dark:bg-emerald-600">
@@ -701,4 +702,4 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </div>
     </div>
 
-<?php include("../src/include/footer.php");?>
+    <?php include("../src/include/footer.php"); ?>
