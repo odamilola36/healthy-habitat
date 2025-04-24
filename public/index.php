@@ -63,8 +63,8 @@ if (($requestUri == '/' || $requestUri == '/index.php') && $requestMethod == 'GE
     $productController->showCategories();
 } elseif (preg_match('/^\/edit-product\/(\d+)$/', $requestUri, $matches) && $requestMethod == 'GET') {
     $productController->showEditProductForm($matches[1]);
-} elseif ($requestUri == '/edit-product.php' && $requestMethod == 'POST') {
-    $productController->createProduct($_POST);
+} elseif (preg_match('/^\/edit-product\/(\d+)$/', $requestUri, $matches) &&  $requestMethod == 'POST') {
+    $productController->editProduct($matches[1],$_POST);
 } else {
     // 404 Not Found
 

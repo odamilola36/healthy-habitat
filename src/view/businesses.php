@@ -644,7 +644,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </ul>
         </div>
 
-        <!-- <div class="p-8 flex-1 overflow-y-auto"> -->
         <div class="p-8 flex-1">
             <?php
                 if (!empty($businesses)) {

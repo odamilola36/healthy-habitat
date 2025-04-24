@@ -1,0 +1,213 @@
+Array
+(
+    [name] => Organic Honey2
+    [description] => Raw, unfiltered honey harvested from local farms.                                                                                                                        
+    [benefit] => Boosts immunity, antioxidant-rich.                                                                                                                        
+    [price] => 15.99
+    [quantity] => 50
+    [pricing_category] => premium
+    [category] => 2
+    [type] => services
+    [certification] => ISA
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 1
+            [name] => Organic Honey2
+            [description] => Raw, unfiltered honey harvested from local farms.                                                                                                                        
+            [pricing_category] => premium
+            [price] => 15.99
+            [health_benefits] => Boosts immunity, antioxidant-rich.                                                                                                                        
+            [certifications] => ISA
+            [product_type] => services
+            [quantity] => 50
+            [image_name] => default.jpg
+            [business_id] => 1
+            [prod_cat_id] => 2
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+    [1] => Array
+        (
+            [id] => 2
+            [name] => Yoga Class Pass
+            [description] => Access to 10 sessions of yoga classes.
+            [pricing_category] => moderate
+            [price] => 60.00
+            [health_benefits] => Improves flexibility, reduces stress.
+            [certifications] => ISA
+            [product_type] => services
+            [quantity] => 10
+            [image_name] => default.jpg
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+    [2] => Array
+        (
+            [id] => 3
+            [name] => Herbal Tea Pack
+            [description] => A variety of herbal teas for relaxation.
+            [pricing_category] => affordable
+            [price] => 9.49
+            [health_benefits] => Promotes relaxation, aids digestion.
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 100
+            [image_name] => default.jpg
+            [business_id] => 1
+            [prod_cat_id] => 4
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+    [3] => Array
+        (
+            [id] => 4
+            [name] => Massage Therapy
+            [description] => 60-minute therapeutic massage session.
+            [pricing_category] => premium
+            [price] => 80.00
+            [health_benefits] => Reduces muscle tension, improves circulation.
+            [certifications] => ISA
+            [product_type] => services
+            [quantity] => 5
+            [image_name] => default.jpg
+            [business_id] => 1
+            [prod_cat_id] => 2
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+    [4] => Array
+        (
+            [id] => 5
+            [name] => Vegan Protein Powder
+            [description] => Plant-based protein blend for fitness.
+            [pricing_category] => moderate
+            [price] => 29.99
+            [health_benefits] => Muscle recovery, sustained energy.
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 40
+            [image_name] => default.jpg
+            [business_id] => 1
+            [prod_cat_id] => 3
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+    [5] => Array
+        (
+            [id] => 6
+            [name] => Mental Wellness Coaching
+            [description] => One-on-one session with certified coach.
+            [pricing_category] => premium
+            [price] => 100.00
+            [health_benefits] => Improves mental clarity and focus.
+            [certifications] => ISA
+            [product_type] => services
+            [quantity] => 8
+            [image_name] => default.jpg
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+    [6] => Array
+        (
+            [id] => 7
+            [name] => Natural Skincare Kit
+            [description] => Complete skincare set with natural ingredients.
+            [pricing_category] => moderate
+            [price] => 45.50
+            [health_benefits] => Soothes skin, reduces acne.
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 25
+            [image_name] => default.jpg
+            [business_id] => 1
+            [prod_cat_id] => 4
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+    [7] => Array
+        (
+            [id] => 8
+            [name] => Personal Training Session
+            [description] => Private workout with certified trainer.
+            [pricing_category] => premium
+            [price] => 70.00
+            [health_benefits] => Enhances strength and stamina.
+            [certifications] => ISA
+            [product_type] => services
+            [quantity] => 6
+            [image_name] => default.jpg
+            [business_id] => 1
+            [prod_cat_id] => 2
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+    [8] => Array
+        (
+            [id] => 9
+            [name] => Reusable Water Bottle
+            [description] => Eco-friendly stainless steel bottle.
+            [pricing_category] => affordable
+            [price] => 12.00
+            [health_benefits] => Encourages hydration, reduces plastic waste.
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 150
+            [image_name] => default.jpg
+            [business_id] => 1
+            [prod_cat_id] => 3
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+    [9] => Array
+        (
+            [id] => 10
+            [name] => Aromatherapy Workshop
+            [description] => Learn essential oil blending techniques.
+            [pricing_category] => moderate
+            [price] => 35.00
+            [health_benefits] => Reduces stress, enhances mood.
+            [certifications] => ISA
+            [product_type] => services
+            [quantity] => 12
+            [image_name] => default.jpg
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+    [10] => Array
+        (
+            [id] => 11
+            [name] => table water
+            [description] =>              cool refreshing            
+            [pricing_category] => affordable
+            [price] => 5.00
+            [health_benefits] =>                         helps you stay hydrated
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 20
+            [image_name] => 1_img_6809434a9b9809.19883337.JPG
+            [business_id] => 1
+            [prod_cat_id] => 5
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+)

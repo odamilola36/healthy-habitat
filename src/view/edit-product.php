@@ -1,6 +1,6 @@
-<!-- <?php
+<?php
 $currentPage = basename($_SERVER['PHP_SELF']);
-?> -->
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -624,118 +624,127 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </div>
     </nav>
 
-    <div class="flex h-full">
-        <div class="p-8 flex-1 overflow-y-auto">
-            <div class="w-5/6 m-auto mt-20">
-                <div class="inline-flex items-center justify-center w-full">
-                    <hr class="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-                    <span
-                        class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 left-1/2 dark:text-white dark:bg-gray-900">Edit
-                        Product</span>
+    <div class="p-8 flex-1 flex h-full overflow-y-auto">
+        <div class="w-5/6 m-auto mt-10">
+
+            <?php if (isset($_SESSION['error'])): ?>
+                <div id="errorAlert" class="bg-red-100 text-red-800 p-3 rounded mb-4 flex items-center justify-between">
+                    <span><?= htmlspecialchars($_SESSION['error']) ?></span>
+                    <button onclick="document.getElementById('errorAlert').style.display='none'" class="text-red-800 hover:text-red-600 ml-4 font-bold text-lg">
+                        &times;
+                    </button>
                 </div>
-                <form class="max-w-md mx-auto p-10" action="/add-product.php" method="PUT"
-                    enctype="multipart/form-data">
-                    <div class=" relative z-0 w-full mb-5 group">
-                        <input type="text" name="name" id="name"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder="" required value="<?= htmlspecialchars($product['name']) ?>" />
-                        <label for="name"
-                            class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Name
-                        </label>
-                    </div>
-                    <div class="relative z-0 w-full mb-5 group">
-                        <textarea type="text" name="description" id="description"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder="" required><?= htmlspecialchars($product['description']) ?>
-                        </textarea>
-                        <label for="description"
-                            class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Description
-                        </label>
-                    </div>
-                    <div class="relative z-0 w-full mb-5 group">
-                        <textarea type="text" name="benefit" id="benefits"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder="" required><?= htmlspecialchars($product['health_benefits']) ?>
-                        </textarea>
-                        <label for="benefits"
-                            class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Health Benefits
-                        </label>
-                    </div>
-                    <div class="grid md:grid-cols-2 md:gap-6">
-                        <div class="relative z-0 w-full mb-5 group">
-                            <input type="number" name="price" id="price" step="0.01"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                                placeholder="" required value="<?= htmlspecialchars($product['price']) ?>"/>
-                            <label for="price"
-                                class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Price
-                            </label>
-                        </div>
-                        <div class="relative z-0 w-full mb-5 group">
-                            <input type="number" step="1" name="quantity" id="quantity"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                                placeholder="" required value="<?= htmlspecialchars($product['quantity']) ?>"/>
-                            <label for="quantity"
-                                class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                Quantity
-                            </label>
-                        </div>
-                    </div>
-                    <div class="relative z-0 w-full mb-5 group">
-                        <select name="pricing_category" id="pricingCategory"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                            required>
-                            <option value="affordable" <?= $product['pricing_category'] === 'affordable' ? 'selected' : '' ?>>Affordable</option>
-                            <option value="moderate" <?= $product['pricing_category'] === 'moderate' ? 'selected' : '' ?>>Moderate</option>
-                            <option value="premium" <?= $product['pricing_category'] === 'premium' ? 'selected' : '' ?>>Premium</option>
-                        </select>
-                    </div>
-                    <div class="relative z-0 w-full mb-5">
-                        <select name="category" id="category"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                            required>
-                            <?php foreach ($categories as $category): ?>
-                                <option value="<?= $category ?>" <?= $category === $product['product_name'] ? 'selected' : '' ?>>
-                                    <?= ucfirst($category['name']) ?>  
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="relative z-0 w-full mb-5">
-                        <select name="type" id="type"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                            required>
-                            <option value="product" <?= $product['product_type'] === 'product' ? 'selected' : '' ?>>Product</option>
-                            <option value="service" <?= $product['product_type'] === 'service' ? 'selected' : '' ?>>Service</option>
-                        </select>
-                    </div>
-                    <div class="relative z-0 w-full mb-5">
-                        <input type="text" name="certification" id="certification"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder=" " required value="<?= htmlspecialchars($product['certifications']) ?>" />
-                        <label for="certification"
-                            class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Certification
-                        </label>
-                    </div>
-                    <div class="relative z-0 w-full mb-5">
-                        <input type="file" name="image" id="image"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder=" " required />
-                        <label for="image"
-                            class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                            Product Image
-                        </label>
-                    </div>
-                    <div class="flex flex-row place-content-center">
-                        <button type="submit"
-                            class="text-white pl-8 pr-8 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-400 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-400 dark:focus:ring-yellow-400">Submit</button>
-                    </div>
-                </form>
+                <?php unset($_SESSION['error']); ?>
+            <?php endif; ?>
+            <div class="inline-flex items-center justify-center w-full">
+                <hr class="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                <span
+                    class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 left-1/2 dark:text-white dark:bg-gray-900">Edit
+                    Product
+                </span>
             </div>
+            <form class="max-w-md mx-auto p-10" action="/edit-product/<?= urlencode($product['id']) ?>" method="POST"
+                enctype="multipart/form-data">
+                <div class=" relative z-0 w-full mb-5 group">
+                    <input type="text" name="name" id="name"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
+                        placeholder="" required value="<?= htmlspecialchars($product['name']) ?>" />
+                    <label for="name"
+                        class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Name
+                    </label>
+                </div>
+                <div class="relative z-0 w-full mb-5 group">
+                    <textarea type="text" name="description" id="description"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
+                        placeholder="" required><?= htmlspecialchars($product['description']) ?>
+                    </textarea>
+                    <label for="description"
+                        class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Description
+                    </label>
+                </div>
+                <div class="relative z-0 w-full mb-5 group">
+                    <textarea type="text" name="benefit" id="benefits"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
+                        placeholder="" required><?= htmlspecialchars($product['health_benefits']) ?>
+                    </textarea>
+                    <label for="benefits"
+                        class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Health Benefits
+                    </label>
+                </div>
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="number" name="price" id="price" step="0.01"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
+                            placeholder="" required value="<?= htmlspecialchars($product['price']) ?>"/>
+                        <label for="price"
+                            class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Price
+                        </label>
+                    </div>
+                    <div class="relative z-0 w-full mb-5 group">
+                        <input type="number" step="1" name="quantity" id="quantity"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
+                            placeholder="" required value="<?= htmlspecialchars($product['quantity']) ?>"/>
+                        <label for="quantity"
+                            class="peer-focus:font-medium pl-2 absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Quantity
+                        </label>
+                    </div>
+                </div>
+                <div class="relative z-0 w-full mb-5 group">
+                    <select name="pricing_category" id="pricingCategory"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                        required>
+                        <option value="affordable" <?= $product['pricing_category'] === 'affordable' ? 'selected' : '' ?>>Affordable</option>
+                        <option value="moderate" <?= $product['pricing_category'] === 'moderate' ? 'selected' : '' ?>>Moderate</option>
+                        <option value="premium" <?= $product['pricing_category'] === 'premium' ? 'selected' : '' ?>>Premium</option>
+                    </select>
+                </div>
+                <div class="relative z-0 w-full mb-5">
+                    <select name="category" id="category"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                        required>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?= $category['id'] ?>" <?= $category['id'] == $product['prod_cat_id'] ? 'selected' : '' ?>>
+                                <?= ucfirst($category['name']) ?>  
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="relative z-0 w-full mb-5">
+                    <select name="type" id="type"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                        required>
+                        <option value="product" <?= $product['product_type'] == 'product' ? 'selected' : '' ?>>Product</option>
+                        <option value="services" <?= $product['product_type'] == 'services' ? 'selected' : '' ?>>Service</option>
+                    </select>
+                </div>
+                <div class="relative z-0 w-full mb-5">
+                    <input type="text" name="certification" id="certification"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
+                        placeholder=" " required value="<?= htmlspecialchars($product['certifications']) ?>" />
+                    <label for="certification"
+                        class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Certification
+                    </label>
+                </div>
+                <div class="relative z-0 w-full mb-5">
+                    <input type="file" name="image" id="image"
+                        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
+                        placeholder=" "/>
+                    <label for="image"
+                        class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                        Product Image
+                    </label>
+                </div>
+                <div class="flex flex-row place-content-center">
+                    <button type="submit"
+                        class="text-white pl-8 pr-8 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-400 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-400 dark:focus:ring-yellow-400">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 

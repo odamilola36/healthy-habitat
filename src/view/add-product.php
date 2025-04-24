@@ -636,7 +636,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </ul>
         </div>
 
-        <!-- <div class="ml-[12vw] w-[80vw] mx-auto mt-20 px-10 flex-1 overflow-y-auto  bg-gray-100 border" id="contentArea"> -->
         <div class="p-8 flex-1 overflow-y-auto">
             <div class="w-5/6 m-auto mt-20">
                 <div class="inline-flex items-center justify-center w-full">
@@ -702,7 +701,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <div class="relative z-0 w-full mb-5 group">
                         <select name="pricing_category" id="pricingCategory"
                             class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                            required">
+                            required>
                             <option value="" disabled selected>select pricing category</option>
                             <option value="affordable">Affordable</option>
                             <option value="moderate">Moderate</option>
@@ -722,10 +721,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <div class="relative z-0 w-full mb-5">
                         <select name="type" id="type"
                             class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
-                            required">
+                            required>
                             <option value="" disabled selected>select product type</option>
                             <option value="product">Product</option>
-                            <option value="service">Service</option>
+                            <option value="services">Service</option>
                         </select>
                     </div>
                     <div class="relative z-0 w-full mb-5">

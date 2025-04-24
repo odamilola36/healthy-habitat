@@ -643,7 +643,7 @@
     <div class="w-4/6 mx-auto mt-20 mb-20">
         <?php
         if (!empty($product)) {
-            $imagePath = !empty($product['image']) ? 'images/' . htmlspecialchars($product['image']) : 'images/default.jpg';
+            $imagePath = !empty($product['image_name']) ? 'images/' . htmlspecialchars($product['image_name']) : 'images/default.jpg';
             ?>
 
             <div class="flex flex-row h-[65vh]  border border-gray-200 [ rounded-lg shadow-lg">

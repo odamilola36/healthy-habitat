@@ -39,6 +39,16 @@ class ProductModel
         return $count > 0;
     }
 
+    public function getAProductByName($name)
+    {
+        $sql = "SELECT * FROM products WHERE name = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        return $result->fetch_assoc();
+    }
     public function getAllCategories()
     {
         $sql = "SELECT * FROM product_category";
@@ -69,14 +79,14 @@ class ProductModel
         return $stmt->execute();
     }
 
-    public function updateProduct($id, $name, $description, $category, $price, $health_benefits, $certifications)
+    public function updateProduct($id, $name, $description, $category, $price, $health_benefits, $certifications, $type, $quantity, $image_name, $prod_cat_id)
     {
         $sql = "UPDATE products 
-                SET name = ?, description = ?, category = ?, price = ?, health_benefits = ?, certifications = ?
+                SET name = ?, description = ?, pricing_category = ?, price = ?, health_benefits = ?, certifications = ?, product_type = ?, quantity = ?, image_name = ?, prod_cat_id = ?
                 WHERE id = ?";
 
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param("ssssssi", $name, $description, $category, $price, $health_benefits, $certifications, $id);
+        $stmt->bind_param("sssssssssii", $name, $description, $category, $price, $health_benefits, $certifications, $type, $quantity, $image_name, $prod_cat_id, $id);
 
         return $stmt->execute();
     }
@@ -175,7 +185,6 @@ class ProductModel
 
     public function getProductAndCategoryById($id)
     {
-        file_put_contents('debug.log', print_r($id, true), FILE_APPEND);
         $sql = "SELECT products.*, product_category.name as product_name FROM products JOIN product_category ON products.prod_cat_id = product_category.id WHERE products.id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->bind_param("i", $id);

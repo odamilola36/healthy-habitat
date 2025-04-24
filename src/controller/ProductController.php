@@ -166,7 +166,7 @@ class ProductController
                     $category
                 );
 
-                header('Location: /businesses.php');
+                header('Location: /business-page.php');
                 exit;
             } else {
                 header('Location: /login.php');
@@ -201,7 +201,6 @@ class ProductController
         $areaIds = array_map(fn($obj) => $obj['id'], $areas);
         $businessAreas = $this->businessAreaModel->getBusinessAreaByAreaIds($areaIds);
         $businessIds = array_map(fn($obj) => $obj['business_id'], $businessAreas);
-        file_put_contents('debug.log', print_r($businessIds, true), FILE_APPEND);
         $products = $this->productModel->getAllProductsByBusinessIds($businessIds);
 
         file_put_contents('debug.log', print_r($products, true), FILE_APPEND);
@@ -316,12 +315,85 @@ class ProductController
 
     public function showEditProductForm($id)
     {
-        // file_put_contents('debug.log', print_r($id, true), FILE_APPEND);
         $product = $this->productModel->getProductAndCategoryById($id);
-        // $business = $this->businessModel->getBusinessById($product['business_id']);
-        file_put_contents('debug.log', print_r($product, true), FILE_APPEND);
         $categories = $this->productModel->getAllCategories();
 
         include __DIR__ . '/../view/edit-product.php';
+    }
+
+    public function editProduct($id, $postData)
+    {
+        $name = $postData['name'];
+        $description = $postData['description'];
+        $category = $postData['category'];
+        $price = $postData['price'];
+        $quantity = $postData['quantity'];
+        $type = $postData['type'];
+        $health_benefits = $postData['benefit'];
+        $pricing_category = $postData['pricing_category'];
+        $certifications = $postData['certification'];
+        $image_name = null; // default
+
+        $product = $this->productModel->getAProductByName($name);
+        if ($product && $product['id'] != $id) {
+            $_SESSION['error'] = "Product with this name already exists.";
+            header('Location: /edit-product/' .urlencode($id) );
+            exit;
+        }
+
+        if (isset($_SESSION['user_id'])) {
+            $business = $this->businessModel->getBusinessByUserId($_SESSION['user_id']);
+            if ($business) {
+                $business_id = $business['id'];
+
+                if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                    $imageTmpPath = $_FILES['image']['tmp_name'];
+                    $originalName = basename($_FILES['image']['name']);
+                    $imageType = mime_content_type($imageTmpPath);
+                    $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+
+                    if (in_array($imageType, $allowedTypes)) {
+                        $extension = pathinfo($originalName, PATHINFO_EXTENSION);
+                        $image_name = $business_id . '_' . uniqid('img_', true) . '.' . $extension;
+                        $destination = __DIR__ . '/../../public/images/' . $image_name;
+
+                        if (!move_uploaded_file($imageTmpPath, $destination)) {
+                            $_SESSION['error'] = "Failed to upload image.";
+                            header('Location: /edit-product/' .urlencode($id) );
+                            exit;
+                        }
+                    } else {
+                        $_SESSION['error'] = "Only JPEG, PNG, JPG, or WEBP images are allowed.";
+                        header('Location: /edit-product/' .urlencode($id) );
+                        exit;
+                    }
+                } else {
+                    $image_name = $product['image_name'];
+                }
+ 
+                $this->productModel->updateProduct(
+                    $id,
+                    $name,
+                    $description,
+                    $pricing_category,
+                    $price,
+                    $health_benefits,
+                    $certifications,
+                    $type,
+                    $quantity,
+                    $image_name,   
+                    $category
+                );
+
+                header('Location: /business-page.php');
+                exit;
+            } else {
+                header('Location: /login.php');
+                exit;
+            }
+        } else {
+            header('Location: /login.php');
+            exit;
+        }
     }
 }

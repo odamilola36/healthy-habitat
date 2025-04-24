@@ -650,15 +650,21 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <div class="w-5/6 m-auto mt-20">
 
                 <?php if (isset($_SESSION['success'])): ?>
-                    <div class="bg-green-100 text-green-800 p-3 rounded mb-4">
-                        <?= htmlspecialchars($_SESSION['success']) ?>
+                    <div id="successAlert" class="bg-green-100 text-green-800 p-3 rounded mb-4 flex items-center justify-between">
+                        <span><?= htmlspecialchars($_SESSION['success']) ?></span>
+                        <button onclick="document.getElementById('successAlert').style.display='none'" class="text-red-800 hover:text-red-600 ml-4 font-bold text-lg">
+                            &times;
+                        </button>
                     </div>
                     <?php unset($_SESSION['success']); ?>
                 <?php endif; ?>
 
                 <?php if (isset($_SESSION['error'])): ?>
-                    <div class="bg-red-100 text-red-800 p-3 rounded mb-4">
-                        <?= htmlspecialchars($_SESSION['error']) ?>
+                    <div id="errorAlert" class="bg-red-100 text-red-800 p-3 rounded mb-4 flex items-center justify-between">
+                        <span><?= htmlspecialchars($_SESSION['error']) ?></span>
+                        <button onclick="document.getElementById('errorAlert').style.display='none'" class="text-red-800 hover:text-red-600 ml-4 font-bold text-lg">
+                            &times;
+                        </button>
                     </div>
                     <?php unset($_SESSION['error']); ?>
                 <?php endif; ?>

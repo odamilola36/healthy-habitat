@@ -9,7 +9,7 @@ CREATE TABLE products (
     certifications TEXT NOT NULL,
     product_type ENUM('product', 'services') NOT NULL,
     quantity INT NOT NULL,
-    image_name VARCHAR(25) NOT NULL,
+    image_name VARCHAR(255) NOT NULL,
     business_id INT NOT NULL,
     prod_cat_id INT NOT NULL,
     FOREIGN KEY (business_id) REFERENCES businesses(id),
