@@ -615,25 +615,6 @@
                         Network</p>
                 </div>
             </div>
-            <div id="mega-menu-icons" class="items-center justify-between hidden w-100 md:flex md:w-auto md:order-1">
-                <ul class="flex flex-row w-100 justify-evenly">
-                    <li class="p-2 w-24 text-center border-yellow-500 rounded-md border-2 hover:bg-emerald-300">
-                        <a href="/"
-                            class="block text-white py-2 p-10 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                            aria-current="page">Home
-                        </a>
-                    </li>
-                    <li class="p-2 w-24 text-center border-yellow-500 border-2 rounded-md hover:bg-emerald-300">
-                        <a href="/products.php"
-                            class="block py-2 text-white px-3 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700">Products
-                        </a>
-                    </li>
-                    <li class="p-2 w-24 text-center border-yellow-500 rounded-md border-2 hover:bg-emerald-300">
-                        <a href="/about.php"
-                            class="block py-2 text-white px-3 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-                    </li>
-                </ul>
-            </div>
             <div
                 class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
                 <a href="/login.php"
