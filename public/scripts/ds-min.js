@@ -77,7 +77,6 @@ function multiSelect(optionsArray) {
         },
 
         toggleOption(option) {
-            console.log(this.selected);
             const exists = this.selected.find(o => o.id === option.id);
             if (exists) {
                 this.selected = this.selected.filter(o => o.id !== option.id);
@@ -87,7 +86,6 @@ function multiSelect(optionsArray) {
         },
 
         removeOption(index) {
-            console.log(this.selected);
             this.selected.splice(index, 1);
         }
     }

@@ -81,7 +81,7 @@ class AuthController
 
 
         if ($postData['role'] == 'business') {
-            $this->businessModel->createBusiness($userId, $postData['businessName'], $postData['regNumber']);
+            $this->businessModel->createBusiness($userId, $postData['businessName'], $postData['regNumber'], $postData['barea']);
         } elseif ($postData['role'] == 'resident') {
             $this->residentModel->createResident($userId, $postData['firstname'], $postData['lastname'], $postData['gender'], $postData['agegroup'], $postData['area']);
             $interests = $postData['categories'];
@@ -110,7 +110,7 @@ class AuthController
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['logged_in'] = true;
 
-                $returnTo = $_SESSION['returnTo'];
+                $returnTo = $_SESSION['returnTo'] ?? null;
 
                 if ($returnTo) {
                     header('Location: ' . $returnTo);
@@ -136,10 +136,13 @@ class AuthController
 
     public function logout()
     {
-        session_start();
-        session_unset();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $_SESSION = [];
         session_destroy();
+
         header('Location: /login.php');
-        exit();
+        exit;
     }
 }

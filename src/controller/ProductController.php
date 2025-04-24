@@ -202,8 +202,6 @@ class ProductController
         $businessIds = array_map(fn($obj) => $obj['business_id'], $businessAreas);
         $products = $this->productModel->getAllProductsByBusinessIds($businessIds);
 
-        file_put_contents('debug.log', print_r($products, true), FILE_APPEND);
-
 
         include __DIR__ . '/../view/council-page.php';
     }
@@ -336,7 +334,7 @@ class ProductController
         $product = $this->productModel->getAProductByName($name);
         if ($product && $product['id'] != $id) {
             $_SESSION['error'] = "Product with this name already exists.";
-            header('Location: /edit-product/' .urlencode($id) );
+            header('Location: /edit-product/' . urlencode($id));
             exit;
         }
 
@@ -358,18 +356,18 @@ class ProductController
 
                         if (!move_uploaded_file($imageTmpPath, $destination)) {
                             $_SESSION['error'] = "Failed to upload image.";
-                            header('Location: /edit-product/' .urlencode($id) );
+                            header('Location: /edit-product/' . urlencode($id));
                             exit;
                         }
                     } else {
                         $_SESSION['error'] = "Only JPEG, PNG, JPG, or WEBP images are allowed.";
-                        header('Location: /edit-product/' .urlencode($id) );
+                        header('Location: /edit-product/' . urlencode($id));
                         exit;
                     }
                 } else {
                     $image_name = $product['image_name'];
                 }
- 
+
                 $this->productModel->updateProduct(
                     $id,
                     $name,
@@ -380,7 +378,7 @@ class ProductController
                     $certifications,
                     $type,
                     $quantity,
-                    $image_name,   
+                    $image_name,
                     $category
                 );
 

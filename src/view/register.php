@@ -774,6 +774,16 @@
                     <?php endforeach; ?>
                 </select>
             </div>
+            <div class="relative z-0 w-full mb-5 hidden group business">
+                <select name="barea"
+                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                    id="barea" required>
+                    <option value="" disabled selected>Select HQ area</option>
+                    <?php foreach ($areas as $area): ?>
+                        <option value="<?= $area['id'] ?>"><?= htmlspecialchars($area['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
             <div class="grid md:grid-cols-2 md:gap-6 hidden business">
                 <div class="relative z-0 w-full mb-5 group">
                     <input type="text" name="businessName" id="businessName"
