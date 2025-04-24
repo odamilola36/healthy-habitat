@@ -19,9 +19,9 @@ class ProductController
         $this->areaModel = new AreaModel();
         $this->businessAreaModel = new BusinessAreaModel();
     }
-    public function showHome()
+    public function showHome($key, $value, $operator)
     {
-        $products = $this->productModel->getAllProducts();
+        $products = $this->productModel->getAllProducts($key, $value, $operator);
 
         include __DIR__ . '/../view/index.php';
     }
@@ -61,10 +61,9 @@ class ProductController
         header('Location: ' . $returnTo);
     }
 
-    public function showResidentHome()
+    public function showResidentHome($key, $value, $operator)
     {
-        $userId = $_SESSION['user_id'];
-        $products = $this->productModel->getAllProducts();
+        $products = $this->productModel->getAllProducts($key, $value, $operator);
 
         include __DIR__ . '/../view/resident.php';
     }
@@ -220,7 +219,7 @@ class ProductController
         $county = $postData['county'];
         $country = $postData['country'];
 
-        if (isset($_SESSION['user_id'])) {     
+        if (isset($_SESSION['user_id'])) {
             $council = $this->councilModel->getCouncilByUserId($_SESSION['user_id']);
             if ($council) {
                 $area = $this->areaModel->getAreaByNameCounty($name, $county);
@@ -281,7 +280,7 @@ class ProductController
     {
         $name = $postData['name'];
 
-        if (isset($_SESSION['user_id'])) {     
+        if (isset($_SESSION['user_id'])) {
             $council = $this->councilModel->getCouncilByUserId($_SESSION['user_id']);
             if ($council) {
                 $category = $this->productModel->getCategoryByName($name);

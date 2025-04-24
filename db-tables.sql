@@ -1,25 +1,21 @@
--- Products
-CREATE TABLE products (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) UNIQUE NOT NULL,
-    description TEXT NOT NULL,
-    pricing_category ENUM('affordable', 'moderate', 'premium') NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    health_benefits TEXT NOT NULL,
-    certifications TEXT NOT NULL,
-    product_type ENUM('product', 'services') NOT NULL,
-    quantity INT NOT NULL,
-    image_name VARCHAR(255) NOT NULL,
-    business_id INT NOT NULL,
-    prod_cat_id INT NOT NULL,
-    FOREIGN KEY (business_id) REFERENCES businesses(id),
-    FOREIGN KEY (prod_cat_id) REFERENCES product_category(id)
-);
-
 -- Product Category Table
 CREATE TABLE product_category (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) UNIQUE NOT NULL
+);
+
+-- Users Table
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    telephone VARCHAR(20) UNIQUE NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    postcode VARCHAR(20) NOT NULL,
+    role ENUM('business', 'resident', 'council') NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 -- Residents Interest Table
@@ -78,20 +74,6 @@ CREATE TABLE businesses (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Users Table
-CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    telephone VARCHAR(20) UNIQUE NOT NULL,
-    address VARCHAR(255) NOT NULL,
-    city VARCHAR(100) NOT NULL,
-    postcode VARCHAR(20) NOT NULL,
-    role ENUM('business', 'resident', 'council') NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
 -- Business Area Table
 CREATE TABLE business_area (
     business_id INT NOT NULL,
@@ -99,6 +81,24 @@ CREATE TABLE business_area (
     PRIMARY KEY (business_id, area_id),
     FOREIGN KEY (business_id) REFERENCES businesses(id),
     FOREIGN KEY (area_id) REFERENCES areas(id)
+);
+
+-- Products
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    description TEXT NOT NULL,
+    pricing_category ENUM('affordable', 'moderate', 'premium') NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    health_benefits TEXT NOT NULL,
+    certifications TEXT NOT NULL,
+    product_type ENUM('product', 'services') NOT NULL,
+    quantity INT NOT NULL,
+    image_name VARCHAR(255) NOT NULL,
+    business_id INT NOT NULL,
+    prod_cat_id INT NOT NULL,
+    FOREIGN KEY (business_id) REFERENCES businesses(id),
+    FOREIGN KEY (prod_cat_id) REFERENCES product_category(id)
 );
 
 -- Votes Table
