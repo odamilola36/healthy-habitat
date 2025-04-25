@@ -9,12 +9,20 @@ class BusinessModel
         $this->db = Database::getInstance()->getConnection();
     }
 
-    public function createBusiness($userId, $businessName, $regNumber)
+    public function createBusiness($userId, $businessName, $regNumber, $barea)
     {
         $stmt = $this->db->prepare("INSERT INTO businesses (user_id, business_name, registration_number) VALUES (?, ?, ?)");
         $stmt->bind_param("iss", $userId, $businessName, $regNumber);
         $stmt->execute();
-        return $stmt->affected_rows > 0;
+        $business_id = $stmt->insert_id;
+        $this->createBusinessArea($business_id, $barea);
+    }
+
+    private function createBusinessArea($businessId, $areaId)
+    {
+        $stmt = $this->db->prepare("INSERT INTO business_area (business_id, area_id) VALUES (?, ?)");
+        $stmt->bind_param("ii", $businessId, $areaId);
+        $stmt->execute();
     }
 
     public function getBusinessByUserId($id)
@@ -47,7 +55,7 @@ class BusinessModel
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    
+
     public function businessFieldExists($fieldName, $value)
     {
         $query = "SELECT COUNT(*) FROM businesses WHERE $fieldName = ?";

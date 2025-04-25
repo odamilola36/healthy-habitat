@@ -19,9 +19,9 @@ class ProductController
         $this->areaModel = new AreaModel();
         $this->businessAreaModel = new BusinessAreaModel();
     }
-    public function showHome($key, $value, $operator)
+    public function showHome($key, $value)
     {
-        $products = $this->productModel->getAllProducts($key, $value, $operator);
+        $products = $this->productModel->getAllProducts($key, $value);
 
         include __DIR__ . '/../view/index.php';
     }
@@ -61,9 +61,9 @@ class ProductController
         header('Location: ' . $returnTo);
     }
 
-    public function showResidentHome($key, $value, $operator)
+    public function showResidentHome($key, $value)
     {
-        $products = $this->productModel->getAllProducts($key, $value, $operator);
+        $products = $this->productModel->getAllProducts($key, $value);
 
         include __DIR__ . '/../view/resident.php';
     }
@@ -338,7 +338,7 @@ file_put_contents('debug.log',print_r($_FILES['image'], true), FILE_APPEND);
         $product = $this->productModel->getAProductByName($name);
         if ($product && $product['id'] != $id) {
             $_SESSION['error'] = "Product with this name already exists.";
-            header('Location: /edit-product/' .urlencode($id) );
+            header('Location: /edit-product/' . urlencode($id));
             exit;
         }
 
@@ -360,18 +360,18 @@ file_put_contents('debug.log',print_r($_FILES['image'], true), FILE_APPEND);
 
                         if (!move_uploaded_file($imageTmpPath, $destination)) {
                             $_SESSION['error'] = "Failed to upload image.";
-                            header('Location: /edit-product/' .urlencode($id) );
+                            header('Location: /edit-product/' . urlencode($id));
                             exit;
                         }
                     } else {
                         $_SESSION['error'] = "Only JPEG, PNG, JPG, or WEBP images are allowed.";
-                        header('Location: /edit-product/' .urlencode($id) );
+                        header('Location: /edit-product/' . urlencode($id));
                         exit;
                     }
                 } else {
                     $image_name = $product['image_name'];
                 }
- 
+
                 $this->productModel->updateProduct(
                     $id,
                     $name,
@@ -382,7 +382,7 @@ file_put_contents('debug.log',print_r($_FILES['image'], true), FILE_APPEND);
                     $certifications,
                     $type,
                     $quantity,
-                    $image_name,   
+                    $image_name,
                     $category
                 );
 

@@ -5,8 +5,6 @@ ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../logs/error.log');
 set_exception_handler('handleException');
 set_error_handler('handleError');
-ini_set('upload_max_filesize', '10M');
-ini_set('post_max_size', '12M');
 
 function handleException($e)
 {
@@ -43,10 +41,9 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 
 if (($requestUri == '/' || $requestUri == '/index.php') && $requestMethod == 'GET') {
-    $key = isset($_GET['key']) ? trim($_GET['key']) : null;
-    $operator = isset($_GET['operator']) ? trim($_GET['operator']) : null;
-    $value = isset($_GET['value']) ? trim($_GET['value']) : null;
-    $productController->showHome($key, $value, $operator);
+    $key = isset($_GET['key']) ? $_GET['key'] : [];
+    $value = isset($_GET['value']) ? $_GET['value'] : [];
+    $productController->showHome($key, $value);
 } elseif ($requestUri == '/login.php' && $requestMethod == 'GET') {
     $authController->showLoginForm();
 } elseif (preg_match('/^\/product-details\/(\d+)$/', $requestUri, $matches) && $requestMethod == 'GET') {
@@ -63,10 +60,9 @@ if (($requestUri == '/' || $requestUri == '/index.php') && $requestMethod == 'GE
     $productController->vote($_POST);
 } elseif ($requestUri == '/resident.php' && $requestMethod == 'GET') {
     $authUtil->requiresResident();
-    $key = isset($_GET['key']) ? trim($_GET['key']) : null;
-    $operator = isset($_GET['operator']) ? trim($_GET['operator']) : null;
-    $value = isset($_GET['value']) ? trim($_GET['value']) : null;
-    $productController->showResidentHome($key, $value, $operator);
+    $key = isset($_GET['key']) ? $_GET['key'] : [];
+    $value = isset($_GET['value']) ? $_GET['value'] : [];
+    $productController->showResidentHome($key, $value);
 } elseif ($requestUri == '/council-page.php' && $requestMethod == 'GET') {
     $authUtil->requiresCouncil();
     $productController->showCouncilPageHome();
@@ -105,9 +101,11 @@ if (($requestUri == '/' || $requestUri == '/index.php') && $requestMethod == 'GE
 } elseif (preg_match('/^\/edit-product\/(\d+)$/', $requestUri, $matches) && $requestMethod == 'GET') {
     $authUtil->requiresBusiness();
     $productController->showEditProductForm($matches[1]);
-} elseif (preg_match('/^\/edit-product\/(\d+)$/', $requestUri, $matches) &&  $requestMethod == 'POST') {
+} elseif (preg_match('/^\/edit-product\/(\d+)$/', $requestUri, $matches) && $requestMethod == 'POST') {
     $authUtil->requiresBusiness();
-    $productController->editProduct($matches[1],$_POST);
+    $productController->editProduct($matches[1], $_POST);
+} elseif ($requestUri == '/500.php' && $requestMethod == 'GET') {
+    $authController->showErrorPage();
 } else {
     $authController->showNotFound();
 }

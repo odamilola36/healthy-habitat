@@ -615,25 +615,6 @@
                         Network</p>
                 </div>
             </div>
-            <div id="mega-menu-icons" class="items-center justify-between hidden w-100 md:flex md:w-auto md:order-1">
-                <ul class="flex flex-row w-100 justify-evenly">
-                    <li class="p-2 w-24 text-center border-yellow-500 rounded-md border-2 hover:bg-emerald-300">
-                        <a href="/"
-                            class="block text-white py-2 p-10 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                            aria-current="page">Home
-                        </a>
-                    </li>
-                    <li class="p-2 w-24 text-center border-yellow-500 border-2 rounded-md hover:bg-emerald-300">
-                        <a href="/products.php"
-                            class="block py-2 text-white px-3 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700">Products
-                        </a>
-                    </li>
-                    <li class="p-2 w-24 text-center border-yellow-500 rounded-md border-2 hover:bg-emerald-300">
-                        <a href="/about.php"
-                            class="block py-2 text-white px-3 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-                    </li>
-                </ul>
-            </div>
             <div
                 class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
                 <a href="/login.php"
@@ -769,6 +750,16 @@
                     class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                     id="area" required>
                     <option value="" disabled selected>Select your Area</option>
+                    <?php foreach ($areas as $area): ?>
+                        <option value="<?= $area['id'] ?>"><?= htmlspecialchars($area['name']) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="relative z-0 w-full mb-5 hidden group business">
+                <select name="barea"
+                    class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
+                    id="barea" required>
+                    <option value="" disabled selected>Select HQ area</option>
                     <?php foreach ($areas as $area): ?>
                         <option value="<?= $area['id'] ?>"><?= htmlspecialchars($area['name']) ?></option>
                     <?php endforeach; ?>

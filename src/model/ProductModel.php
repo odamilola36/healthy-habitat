@@ -9,47 +9,64 @@ class ProductModel
         $this->db = Database::getInstance()->getConnection();
     }
 
-    public function getAllProducts($key, $value, $operator)
+    public function getAllProducts($keys, $values)
     {
         $allowedKeys = [
             'name' => 'name',
-            'benefit' => 'health_benefits',
             'price' => 'price',
-            'category' => 'pricing_category',
-            'type' => 'product_type',
-            'quantity' => 'quantity',
         ];
 
-        $allowedOperators = ['=', '!=', '<', '>', 'LIKE'];
-        $sql = "SELECT p.*, COUNT(v.vote) AS positive_votes FROM products p LEFT JOIN votes v ON p.id = v.product_id AND v.vote = 1";
+        $sql = "SELECT p.*, COUNT(v.vote) AS positive_votes 
+            FROM products p 
+            LEFT JOIN votes v ON p.id = v.product_id AND v.vote = 1
+            LEFT JOIN product_category pc ON p.prod_cat_id = pc.id";
         $params = [];
         $types = '';
 
-        if ($key && $value && $operator) {
-            if (array_key_exists($key, $allowedKeys) && in_array($operator, $allowedOperators)) {
-                $dbColumn = $allowedKeys[$key];
+        $whereClause = [];
 
+        for ($i = 0; $i < count($keys); $i++) {
+            $key = $keys[$i];
+            $value = $values[$i];
+
+            if (array_key_exists($key, $allowedKeys)) {
+                $dbColumn = $allowedKeys[$key];
                 $type = 's';
 
                 if (in_array($key, ['price', 'quantity'])) {
                     if (!is_numeric($value)) {
-                        die("Invalid numeric input for $key");
+                        throw new InvalidArgumentException("Invalid numeric input for $key");
                     }
                     $type = is_float($value + 0) ? 'd' : 'i';
                 }
 
-                if ($operator === 'LIKE') {
-                    $value = "%$value%";
+                $operator = '=';
+                if ($key === 'name' || $key === 'category') {
+                    $operator = 'LIKE';
+                }
+                if ($key === 'price') {
+                    $operator = '<=';
                 }
 
-                $sql .= " WHERE $dbColumn $operator ?";
-                $params[] = $value;
-                $types .= $type;
+                if ($key !== 'name') {
+                    $whereClause[] = "$dbColumn $operator ?";
+                    $params[] = $value;
+                    $types .= $type;
+                } else {
+                    $whereClause[] = "LOWER(pc.$dbColumn) $operator LOWER(?)";
+                    $params[] = "%$value%";
+                    $types .= $type;
+                }
             }
+        }
+
+        if (!empty($whereClause)) {
+            $sql .= " WHERE " . implode(" AND ", $whereClause);
         }
 
         $sql .= " GROUP BY p.id ORDER BY positive_votes DESC";
 
+        error_log("" . $sql);
         $stmt = $this->db->prepare($sql);
 
         if (!empty($params)) {
@@ -58,8 +75,7 @@ class ProductModel
 
         $stmt->execute();
         $result = $stmt->get_result();
-
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
     public function getAllProductsForBusiness($business_id)

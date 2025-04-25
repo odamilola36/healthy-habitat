@@ -9,6 +9,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../scripts/ds-min.js"></script>
 </head>
 
 <body class="flex flex-col min-h-screen font-sans">
@@ -630,7 +631,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <li class="cursor-pointer">
                     <a href="business-page.php" class="hover:text-emerald-600 font-medium">Home</a>
                 </li>
-                <li class="cursor-pointer <?= $currentPage === 'add-product.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
+                <li
+                    class="cursor-pointer <?= $currentPage === 'add-product.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
                     <a href="add-product.php" class="hover:text-emerald-600 font-medium">Add Products</a>
                 </li>
             </ul>
@@ -737,23 +739,21 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         </label>
                     </div>
                     <div class="relative z-0 w-full mb-5">
-                        <input type="file" name="image" id="image"
+                        <input type="file" name="image" id="image" onchange="validateUpload(event)"
+                            accept="image/png, image/jpeg, image/jpg"
                             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
-                            placeholder=" " required />
+                            placeholder="" required />
                         <label for="image"
                             class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Product Image
                         </label>
+                        <span class="text-red-500 text-xs" id="upload-error"></span>
                     </div>
                     <div class="flex flex-row place-content-center">
                         <button type="submit"
                             class="text-white pl-8 pr-8 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-400 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-400 dark:focus:ring-yellow-400">Submit</button>
                     </div>
-
                 </form>
-
-
-
             </div>
         </div>
     </div>
