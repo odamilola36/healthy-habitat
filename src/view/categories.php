@@ -668,7 +668,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     }
                 }
             } else {
-                echo "No areas found!!!";
+                echo "No category found!!!";
             }
             ?>
         </div>

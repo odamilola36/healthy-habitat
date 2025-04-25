@@ -5,6 +5,8 @@ ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../logs/error.log');
 set_exception_handler('handleException');
 set_error_handler('handleError');
+ini_set('upload_max_filesize', '10M');
+ini_set('post_max_size', '12M');
 
 function handleException($e)
 {

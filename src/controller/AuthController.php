@@ -110,7 +110,7 @@ class AuthController
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['logged_in'] = true;
 
-                $returnTo = $_SESSION['returnTo'];
+                $returnTo = $_SESSION['returnTo'] ?? null;
 
                 if ($returnTo) {
                     header('Location: ' . $returnTo);

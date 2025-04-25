@@ -617,7 +617,7 @@
             </div>
             <div
                 class="flex flex-row w-24 rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-                <a href="/login.php"
+                <a href="/logout.php"
                     class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
             </div>
         </div>
@@ -654,7 +654,7 @@
         if (!empty($products)) {
             $count = 0;
             foreach ($products as $index => $product) {
-                $imagePath = !empty($product['image']) ? 'images/' . htmlspecialchars($product['image']) : 'images/default.jpg';
+                $imagePath = !empty($product['image_name']) ? 'images/' . htmlspecialchars($product['image_name']) : 'images/default.jpg';
                 if ($count % 3 === 0) {
                     echo '<div class="flex flex-row gap-4 py-2">';
                 }
