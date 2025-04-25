@@ -39,6 +39,10 @@ class AuthController
     {
         include __DIR__ . '/../view/notfound.php';
     }
+    public function showErrorPage()
+    {
+        include __DIR__ . '/../view/500.php';
+    }
 
     public function register($postData)
     {

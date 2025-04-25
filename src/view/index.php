@@ -633,29 +633,39 @@
     </nav>
 
     <div class="w-5/6 mx-auto mt-20 mb-20">
-        <form action="" method="GET" x-data="searchFilters()"
-            class="max-w-xl mb-4 mx-auto rounded-md shadow-sm space-y-4">
-            <div class="flex items-center gap-2">
-                <select name="key" x-model="newFilter.key" class="py-2 text-gray-400 rounded w-1/2">
-                    <option value="">Select Filter</option>
-                    <template x-for="(label, key) in filterOptions" :key="key">
-                        <option :value="key" x-text="label"></option>
+
+        <div x-data="filterSearch()" class="max-w-xl mb-4 mx-auto rounded-md shadow-sm">
+            <form id="searchForm" action="" method="GET" @submit.prevent="submitForm">
+                <div class="flex items-center gap-2">
+                    <select x-model="newFilter.key" @change="updateInputType"
+                        class="py-2 px-2 text-gray-700 border border-gray-300 rounded w-1/3">
+                        <option value="" class="text-xs px-2 text-gray-700">Select Filter</option>
+                        <template x-for="option in availableOptions" :key="option">
+                            <option :value="option" x-text="option.charAt(0).toUpperCase() + option.slice(1)"></option>
+                        </template>
+                    </select>
+                    <input :type="inputType" x-model="newFilter.value" @keydown.enter.prevent="addFilter"
+                        placeholder="Enter value then Go to submit"
+                        class="py-2 px-2 border border-gray-300 rounded w-full" />
+                    <button type="submit"
+                        class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">Go</button>
+                    <a href="index.php">
+                        <a href="index.php" onclick="resetFilters()"
+                            class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">Reset</a></a>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    <template x-for="(filter, index) in filters" :key="index">
+                        <div
+                            class="flex items-center space-x-1 bg-gray-100 text-gray-800 px-3 py-1 mb-2 rounded-full text-sm">
+                            <span x-text="`${filter.key}: ${filter.value}`"></span>
+                            <button type="button" @click="removeFilter(index)">✖</button>
+                        </div>
                     </template>
-                </select>
-                <select name="operator" class="py-2 text-gray-400 rounded w-1/6">
-                    <option value="=">=</option>
-                    <option value="!=">≠</option>
-                    <option value=">">&gt;</option>
-                    <option value="<">&lt;</option>
-                    <option value="LIKE">Contains</option>
-                </select>
-                <input type="text" name="value" placeholder="Enter value"
-                    class="py-2 px-2 rounded w-full border border-gray-300" />
-                <button type="submit"
-                    class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">🔍
-                </button>
-            </div>
-        </form>
+                </div>
+            </form>
+            <span class="text-red-500 text-xs" id="search-error"></span>
+        </div>
+
         <h3 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
                 class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Healthy Habitat
                 Network</span>

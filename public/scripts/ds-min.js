@@ -59,8 +59,7 @@ function isValidUKPhoneNumber(event) {
     if (!ukPhoneRegex.test(phone)) {
         message.textContent = "Invalid UK phone number";
         message.style.color = "red";
-    }
-    else {
+    } else {
         message.textContent = "";
     }
 }
@@ -158,6 +157,104 @@ function searchFilters() {
       },
       removeFilter(index) {
         this.filters.splice(index, 1);
+      },
+      vlaidateSearch() {
+        const key = document.querySelector('[name="key1"]').value.trim();
+        const value = document.querySelector('[name="value1"]').value.trim();
+
+        if (key && value) {
+            $el.submit(); // manually submit the form if valid
+        }
       }
     }
   }
+
+  function filterSearch() {
+    return {
+        newFilter: { key: '', value: '' },
+        filters: [],
+        inputType: 'text',
+        allOptions: ['name', 'price'],
+
+        get availableOptions() {
+            return this.allOptions.filter(opt => !this.filters.some(f => f.key === opt));
+        },
+
+        updateInputType() {
+            this.inputType = this.newFilter.key === 'price' ? 'number' : 'text';
+            this.newFilter.value = '';
+        },
+
+        addFilter() {
+            if (this.newFilter.key && this.newFilter.value) {
+                this.filters.push({ ...this.newFilter });
+                document.getElementById('search-error').innerText = '';
+                this.newFilter = { key: '', value: '' };
+                this.inputType = 'text';
+            }
+        },
+
+        removeFilter(index) {
+            this.filters.splice(index, 1);
+        },
+
+        clearFilters() {
+            this.filters = [];
+            document.getElementById('search-error').innerText = '';
+        },
+
+        submitForm() {
+            if (this.filters.length === 0) {
+                document.getElementById('search-error').innerText = 'Please add at least one filter.';
+                return;
+            }
+
+            const form = document.getElementById('searchForm');
+            form.querySelectorAll('.dynamic-filter').forEach(e => e.remove());
+
+            this.filters.forEach(filter => {
+                const keyInput = document.createElement('input');
+                keyInput.type = 'hidden';
+                keyInput.name = 'key[]';
+                keyInput.value = filter.key;
+                keyInput.classList.add('dynamic-filter');
+
+                const valueInput = document.createElement('input');
+                valueInput.type = 'hidden';
+                valueInput.name = 'value[]';
+                valueInput.value = filter.value;
+                valueInput.classList.add('dynamic-filter');
+
+                form.appendChild(keyInput);
+                form.appendChild(valueInput);
+            });
+
+            form.submit();
+        }
+    };
+}
+
+
+  function validateUpload(event) {
+    console.log(event);
+    const fileInput = event.target;
+    const filePath = fileInput.value;
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+    const errorEl = document.getElementById("upload-error");
+    
+    if (!allowedExtensions.exec(filePath)) {
+        errorEl.textContent = "Invalid file type. Please upload an image.";
+        fileInput.value = '';
+        return false;
+    } else {
+        errorEl.textContent = "";
+    }
+    const file = fileInput.files[0];
+    if (file.size > 2 * 1024 * 1024) {
+        errorEl.textContent = "File size exceeds 2MB.";
+        fileInput.value = '';
+        return false;
+    } else {
+        errorEl.textContent = "";
+    }
+}

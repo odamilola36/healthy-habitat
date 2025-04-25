@@ -665,7 +665,7 @@
                         <p class="mb-3 mt-3 font-normal text-center text-gray-700 dark:text-gray-400">
                             <?= htmlspecialchars($product['health_benefits']) ?>
                         </p>
-                        <?php if ($_SESSION['role'] == 'resident') { ?>
+                        <?php if (!isset($_SESSION['role']) || ($_SESSION['role'] == 'resident')) { ?>
                             <div
                                 class="my-4 p-3 flex flex-row justify-between w-full font-normal text-gray-700 dark:text-gray-400">
                                 <form method="POST" action="vote.php" class="inline">

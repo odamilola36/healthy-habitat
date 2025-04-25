@@ -19,9 +19,9 @@ class ProductController
         $this->areaModel = new AreaModel();
         $this->businessAreaModel = new BusinessAreaModel();
     }
-    public function showHome($key, $value, $operator)
+    public function showHome($key, $value)
     {
-        $products = $this->productModel->getAllProducts($key, $value, $operator);
+        $products = $this->productModel->getAllProducts($key, $value);
 
         include __DIR__ . '/../view/index.php';
     }
@@ -61,9 +61,9 @@ class ProductController
         header('Location: ' . $returnTo);
     }
 
-    public function showResidentHome($key, $value, $operator)
+    public function showResidentHome($key, $value)
     {
-        $products = $this->productModel->getAllProducts($key, $value, $operator);
+        $products = $this->productModel->getAllProducts($key, $value);
 
         include __DIR__ . '/../view/resident.php';
     }
