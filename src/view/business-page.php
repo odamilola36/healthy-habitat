@@ -638,8 +638,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </div>
 
         <div class="p-8 flex-1 overflow-y-auto">
-            <?php
-            if (!empty($products)) { ?>
                 <div x-data="filterSearch()" class="max-w-xl mb-4 mx-auto rounded-md shadow-sm">
                     <form id="searchForm" action="" method="GET" @submit.prevent="submitForm">
                         <div class="flex items-center gap-2">
@@ -673,7 +671,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     <span class="text-red-500 text-xs" id="search-error"></span>
                 </div>
 
-            <?php } ?>
             <?php
             if (!empty($products)) {
                 $count = 0;
@@ -699,6 +696,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                                 </p>
                                 <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Price:
                                     </strong>£ <?= htmlspecialchars($product['price']) ?>
+                                </p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Upvotes:
+                                    </strong> <?= htmlspecialchars($product['true_votes']) ?>
+                                </p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Downvotes:
+                                    </strong> <?= htmlspecialchars($product['false_votes']) ?>
                                 </p>
                             </div>
                             <div class="flex items-center justify-around mt-4">

@@ -1,0 +1,10 @@
+
+# Healthy Habitat network
+
+To start the project, create a database called `healthy_habitat`
+
+run the queries in db_tables.sql to create the db_tables
+
+run `php -S localhost:8000 -t public` to serve the project on port 8000
+
+visit `localhots:8000` to access the web page

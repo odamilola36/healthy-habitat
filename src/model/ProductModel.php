@@ -84,9 +84,11 @@ class ProductModel
             'price' => 'price',
         ];
 
-        $sql = "SELECT p.*, COUNT(v.vote) AS positive_votes 
+        $sql = "SELECT p.*, 
+            SUM(CASE WHEN v.vote = TRUE THEN 1 ELSE 0 END) AS true_votes,
+            SUM(CASE WHEN v.vote = FALSE THEN 1 ELSE 0 END) AS false_votes
                 FROM products p 
-                LEFT JOIN votes v ON p.id = v.product_id AND v.vote = 1
+                LEFT JOIN votes v ON p.id = v.product_id
                 LEFT JOIN product_category pc ON p.prod_cat_id = pc.id";
 
         $params = [];
@@ -136,7 +138,7 @@ class ProductModel
             $sql .= " WHERE " . implode(" AND ", $whereClause);
         }
 
-        $sql .= " GROUP BY p.id ORDER BY positive_votes DESC";
+        $sql .= " GROUP BY p.id ORDER BY true_votes DESC";
 
         $stmt = $this->db->prepare($sql);
 
@@ -156,9 +158,11 @@ class ProductModel
             'price' => 'price',
         ];
 
-        $sql = "SELECT p.*, COUNT(v.vote) AS positive_votes 
+        $sql = "SELECT p.*, 
+            SUM(CASE WHEN v.vote = TRUE THEN 1 ELSE 0 END) AS true_votes,
+            SUM(CASE WHEN v.vote = FALSE THEN 1 ELSE 0 END) AS false_votes
             FROM products p 
-            LEFT JOIN votes v ON p.id = v.product_id AND v.vote = 1
+            LEFT JOIN votes v ON p.id = v.product_id
             LEFT JOIN product_category pc ON p.prod_cat_id = pc.id";
 
         $params = [];
@@ -172,9 +176,7 @@ class ProductModel
                 $params[] = $id;
                 $types .= 'i';
             }
-        } else {
-            throw new InvalidArgumentException("businessIds list cannot be empty");
-        }
+        } else return [];
 
         for ($i = 0; $i < count($keys); $i++) {
             $key = $keys[$i];
@@ -215,7 +217,7 @@ class ProductModel
             $sql .= " WHERE " . implode(" AND ", $whereClause);
         }
 
-        $sql .= " GROUP BY p.id ORDER BY positive_votes DESC";
+        $sql .= " GROUP BY p.id ORDER BY true_votes DESC";
 
         error_log("" . $sql);
         $stmt = $this->db->prepare($sql);

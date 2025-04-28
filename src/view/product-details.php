@@ -613,11 +613,27 @@
                         Network</p>
                 </div>
             </div>
-            <div
-                class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-                <a href="/login.php"
-                    class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Login</a>
-            </div>
+            <?php if($_SESSION['user_id']) { ?>
+                <div class="flex items-center">
+                    <div
+                        class="flex items-center hover:bg-yellow-300 bg-yellow-500 rounded-md md:order-2 mx-3 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                        <a href="<?php echo $homeUrl ?>"
+                            class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 mx-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Home</a>
+                    </div>
+                    <div
+                        class="flex items-center  hover:bg-yellow-300 bg-yellow-500 rounded-md md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                        <a href="/logout.php"
+                            class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
+                    </div>
+                </div>
+            <?php } ?>
+            <?php if(!$_SESSION['user_id']) { ?>
+                <div
+                    class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    <a href="/login.php"
+                        class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Login</a>
+                </div>
+            <?php } ?>
         </div>
     </nav>
 

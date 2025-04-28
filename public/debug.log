@@ -1,0 +1,207 @@
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [name] => Organic Honey
+            [description] =>                         naturally and unblended oney
+            [pricing_category] => affordable
+            [price] => 5.00
+            [health_benefits] =>                         makes your body glow
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 3
+            [image_name] => 1_img_680f67714bb405.67717132.JPG
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [positive_votes] => 0
+        )
+
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [name] => Organic Honey
+            [description] =>                         naturally and unblended oney
+            [pricing_category] => affordable
+            [price] => 5.00
+            [health_benefits] =>                         makes your body glow
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 3
+            [image_name] => 1_img_680f67714bb405.67717132.JPG
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [name] => Organic Honey
+            [description] =>                         naturally and unblended oney
+            [pricing_category] => affordable
+            [price] => 5.00
+            [health_benefits] =>                         makes your body glow
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 3
+            [image_name] => 1_img_680f67714bb405.67717132.JPG
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [name] => Organic Honey
+            [description] =>                         naturally and unblended oney
+            [pricing_category] => affordable
+            [price] => 5.00
+            [health_benefits] =>                         makes your body glow
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 3
+            [image_name] => 1_img_680f67714bb405.67717132.JPG
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [name] => Organic Honey
+            [description] =>                         naturally and unblended oney
+            [pricing_category] => affordable
+            [price] => 5.00
+            [health_benefits] =>                         makes your body glow
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 3
+            [image_name] => 1_img_680f67714bb405.67717132.JPG
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [name] => Organic Honey
+            [description] =>                         naturally and unblended oney
+            [pricing_category] => affordable
+            [price] => 5.00
+            [health_benefits] =>                         makes your body glow
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 3
+            [image_name] => 1_img_680f67714bb405.67717132.JPG
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [true_votes] => 0
+            [false_votes] => 0
+        )
+
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [name] => Organic Honey
+            [description] =>                         naturally and unblended oney
+            [pricing_category] => affordable
+            [price] => 5.00
+            [health_benefits] =>                         makes your body glow
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 3
+            [image_name] => 1_img_680f67714bb405.67717132.JPG
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [true_votes] => 1
+            [false_votes] => 0
+        )
+
+)
+Array
+(
+    [0] => 1
+)
+Array
+(
+    [0] => Array
+        (
+            [id] => 3
+            [name] => Organic Honey
+            [description] =>                         naturally and unblended oney
+            [pricing_category] => affordable
+            [price] => 5.00
+            [health_benefits] =>                         makes your body glow
+            [certifications] => ISA
+            [product_type] => product
+            [quantity] => 3
+            [image_name] => 1_img_680f67714bb405.67717132.JPG
+            [business_id] => 1
+            [prod_cat_id] => 1
+            [true_votes] => 0
+            [false_votes] => 1
+        )
+
+)

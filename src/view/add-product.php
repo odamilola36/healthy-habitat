@@ -617,10 +617,17 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         Network</p>
                 </div>
             </div>
-            <div
-                class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-                <a href="/logout.php"
-                    class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
+            <div class="flex items-center">
+                <div
+                    class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 mx-3 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    <a href="/business-page.php"
+                        class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 mx-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Home</a>
+                </div>
+                <div
+                    class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    <a href="/logout.php"
+                        class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -747,7 +754,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                             class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
                             Product Image
                         </label>
-                        <span class="text-red-500 text-xs" id="upload-error"></span>
+                        <span class="text-gray-500 text-xs" id="upload-error">image size should not be more than 2MB</span>
                     </div>
                     <div class="flex flex-row place-content-center">
                         <button type="submit"

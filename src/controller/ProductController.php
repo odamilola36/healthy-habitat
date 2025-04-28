@@ -33,6 +33,21 @@ class ProductController
         $upvotes = $this->productModel->getProductUpvotes($id);
         $downvotes = $this->productModel->getProductDownvotes($id);
         $userVote = $this->productModel->getVotes($id);
+        $home = "/index.php";
+        switch ($_SESSION['role']) {
+            case 'resident':
+                $homeUrl = '/resident.php';
+                break;
+            case 'business':
+                $homeUrl = '/business-page.php';
+                break;
+            case 'council':
+                $homeUrl = '/council-page.php';
+                break;
+            default:
+                $homeUrl = '/index.php';
+                break;
+        }
 
         if (!$upvotes) {
             $upvotes = 0;
@@ -131,7 +146,6 @@ class ProductController
             $business = $this->businessModel->getBusinessByUserId($_SESSION['user_id']);
             if ($business) {
                 $business_id = $business['id'];
-                file_put_contents('debug.log', print_r($_FILES['image'], true), FILE_APPEND);
 
                 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                     $imageTmpPath = $_FILES['image']['tmp_name'];

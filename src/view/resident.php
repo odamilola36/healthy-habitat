@@ -10,7 +10,7 @@
     <script src="../../scripts/ds-min.js"></script>
 </head>
 
-<body>
+<body class="min-h-screen flex flex-col">
     <nav class="bg-white border-gray-200 dark:bg-emerald-600">
         <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
             <div class="flex flex-row">
@@ -624,12 +624,6 @@
     </nav>
 
     <div class="w-5/6 mx-auto mt-20 mb-20">
-        <h3 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
-                class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Healthy Habitat
-                Network</span>
-        </h3>
-        <?php
-        if (!empty($products)) { ?>
             <div x-data="filterSearch()" class="max-w-xl mb-4 mx-auto rounded-md shadow-sm">
                 <form id="searchForm" action="" method="GET" @submit.prevent="submitForm">
                     <div class="flex items-center gap-2">
@@ -662,8 +656,10 @@
                 </form>
                 <span class="text-red-500 text-xs" id="search-error"></span>
             </div>
-
-        <?php } ?>
+        <h3 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
+                class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Healthy Habitat
+                Network</span>
+        </h3>
         <?php
         if (!empty($products)) {
             $count = 0;
@@ -688,6 +684,13 @@
                         </p>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Price:
                             </strong>£ <?= htmlspecialchars($product['price']) ?></p>
+
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Upvotes:
+                                    </strong> <?= htmlspecialchars($product['true_votes']) ?>
+                                </p>
+                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Downvotes:
+                                    </strong> <?= htmlspecialchars($product['false_votes']) ?>
+                                </p>
                         <a href="product-details/<?= urlencode($product['id']) ?>"
                             class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-yellow-400 rounded-lg ">
                             View more
