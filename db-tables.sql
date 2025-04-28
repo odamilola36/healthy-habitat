@@ -18,15 +18,6 @@ CREATE TABLE users (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Residents Interest Table
-CREATE TABLE residents_interest (
-    prod_cat_id INT NOT NULL,
-    resident_id INT NOT NULL,
-    PRIMARY KEY (prod_cat_id, resident_id),
-    FOREIGN KEY (prod_cat_id) REFERENCES product_category(id),
-    FOREIGN KEY (resident_id) REFERENCES residents(id)
-);
-
 -- Local Council Table
 CREATE TABLE local_council (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -62,6 +53,15 @@ CREATE TABLE residents (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (area_id) REFERENCES areas(id) ON DELETE CASCADE
+);
+
+-- Residents Interest Table
+CREATE TABLE residents_interest (
+    prod_cat_id INT NOT NULL,
+    resident_id INT NOT NULL,
+    PRIMARY KEY (prod_cat_id, resident_id),
+    FOREIGN KEY (prod_cat_id) REFERENCES product_category(id),
+    FOREIGN KEY (resident_id) REFERENCES residents(id)
 );
 
 -- Business Table

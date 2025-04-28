@@ -5,6 +5,7 @@ ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/../logs/error.log');
 set_exception_handler('handleException');
 set_error_handler('handleError');
+
 function handleException($e)
 {
     error_log($e);

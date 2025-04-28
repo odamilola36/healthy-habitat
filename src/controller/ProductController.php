@@ -131,6 +131,7 @@ class ProductController
             $business = $this->businessModel->getBusinessByUserId($_SESSION['user_id']);
             if ($business) {
                 $business_id = $business['id'];
+                file_put_contents('debug.log', print_r($_FILES['image'], true), FILE_APPEND);
 
                 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                     $imageTmpPath = $_FILES['image']['tmp_name'];
@@ -199,6 +200,7 @@ class ProductController
         $userId = $_SESSION['user_id'];
         $council = $this->councilModel->getCouncilByUserId($userId);
         $areas = $this->areaModel->getAreasByCouncilId($council['id']);
+
         $areaIds = array_map(fn($obj) => $obj['id'], $areas);
         $businessAreas = $this->businessAreaModel->getBusinessAreaByAreaIds($areaIds);
         $businessIds = array_map(fn($obj) => $obj['business_id'], $businessAreas);
@@ -263,10 +265,12 @@ class ProductController
         $userId = $_SESSION['user_id'];
         $council = $this->councilModel->getCouncilByUserId($userId);
         $areas = $this->areaModel->getAreasByCouncilId($council['id']);
-        $areaIds = array_map(fn($obj) => $obj['id'], $areas);
-        $businessAreas = $this->businessAreaModel->getBusinessAreaByAreaIds($areaIds);
-        $businessIds = array_map(fn($obj) => $obj['business_id'], $businessAreas);
-        $businesses = $this->businessModel->getBusinessAndUsersByIds($businessIds);
+        if ($areas) {
+            $areaIds = array_map(fn($obj) => $obj['id'], $areas);
+            $businessAreas = $this->businessAreaModel->getBusinessAreaByAreaIds($areaIds);
+            $businessIds = array_map(fn($obj) => $obj['business_id'], $businessAreas);
+            $businesses = $this->businessModel->getBusinessAndUsersByIds($businessIds);
+        }
 
         include __DIR__ . '/../view/businesses.php';
     }

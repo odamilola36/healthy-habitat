@@ -674,7 +674,7 @@
         if (!empty($products)) {
             $count = 0;
             foreach ($products as $index => $product) {
-                $imagePath = !empty($product['image']) ? 'images/' . htmlspecialchars($product['image']) : 'images/default.jpg';
+                $imagePath = !empty($product['image_name']) ? 'images/' . htmlspecialchars($product['image_name']) : 'images/default.jpg';
                 if ($count % 3 === 0) {
                     echo '<div class="flex flex-row gap-4 py-2">';
                 }
