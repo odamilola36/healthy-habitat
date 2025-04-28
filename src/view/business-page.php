@@ -627,7 +627,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <div class="flex h-screen">
         <div class="w-[15vw] text-gray p-6 bg-gray-100">
             <ul class="space-y-4">
-                <li class="cursor-pointer <?= $currentPage === 'business-page.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
+                <li
+                    class="cursor-pointer <?= $currentPage === 'business-page.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
                     <a href="business-page.php" class="hover:text-emerald-600 font-medium">Home</a>
                 </li>
                 <li class="cursor-pointer">
@@ -637,6 +638,42 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </div>
 
         <div class="p-8 flex-1 overflow-y-auto">
+            <?php
+            if (!empty($products)) { ?>
+                <div x-data="filterSearch()" class="max-w-xl mb-4 mx-auto rounded-md shadow-sm">
+                    <form id="searchForm" action="" method="GET" @submit.prevent="submitForm">
+                        <div class="flex items-center gap-2">
+                            <select x-model="newFilter.key" @change="updateInputType"
+                                class="py-2 px-2 text-gray-700 border border-gray-300 rounded w-1/3">
+                                <option value="" class="text-xs px-2 text-gray-700">Select Filter</option>
+                                <template x-for="option in availableOptions" :key="option">
+                                    <option :value="option" x-text="option.charAt(0).toUpperCase() + option.slice(1)">
+                                    </option>
+                                </template>
+                            </select>
+                            <input :type="inputType" x-model="newFilter.value" @keydown.enter.prevent="addFilter"
+                                placeholder="Enter value then Go to submit"
+                                class="py-2 px-2 border border-gray-300 rounded w-full" />
+                            <button type="submit"
+                                class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">Go</button>
+                            <a href="index.php">
+                                <a href="index.php" onclick="resetFilters()"
+                                    class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">Reset</a></a>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <template x-for="(filter, index) in filters" :key="index">
+                                <div
+                                    class="flex items-center space-x-1 bg-gray-100 text-gray-800 px-3 py-1 mb-2 rounded-full text-sm">
+                                    <span x-text="`${filter.key}: ${filter.value}`"></span>
+                                    <button type="button" @click="removeFilter(index)">✖</button>
+                                </div>
+                            </template>
+                        </div>
+                    </form>
+                    <span class="text-red-500 text-xs" id="search-error"></span>
+                </div>
+
+            <?php } ?>
             <?php
             if (!empty($products)) {
                 $count = 0;
@@ -670,8 +707,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                                     View more
                                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                                     </svg>
                                 </a>
                                 <a href="edit-product/<?= urlencode($product['id']) ?>"
@@ -679,8 +716,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                                     Edit Product
                                     <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true"
                                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M1 5h12m0 0L9 1m4 4L9 9" />
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
                                     </svg>
                                 </a>
                             </div>

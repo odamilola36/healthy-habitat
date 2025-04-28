@@ -77,8 +77,160 @@ class ProductModel
         $result = $stmt->get_result();
         return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
+    public function getAllProductsForBusiness($keys, $values, $business_id)
+    {
+        $allowedKeys = [
+            'name' => 'name',
+            'price' => 'price',
+        ];
 
-    public function getAllProductsForBusiness($business_id)
+        $sql = "SELECT p.*, COUNT(v.vote) AS positive_votes 
+                FROM products p 
+                LEFT JOIN votes v ON p.id = v.product_id AND v.vote = 1
+                LEFT JOIN product_category pc ON p.prod_cat_id = pc.id";
+
+        $params = [];
+        $types = '';
+        $whereClause = [];
+
+        $whereClause[] = "p.business_id = ?";
+        $params[] = $business_id;
+        $types .= 'i';
+
+        for ($i = 0; $i < count($keys); $i++) {
+            $key = $keys[$i];
+            $value = $values[$i];
+
+            if (array_key_exists($key, $allowedKeys)) {
+                $dbColumn = $allowedKeys[$key];
+                $type = 's';
+
+                if (in_array($key, ['price', 'quantity'])) {
+                    if (!is_numeric($value)) {
+                        throw new InvalidArgumentException("Invalid numeric input for $key");
+                    }
+                    $type = is_float($value + 0) ? 'd' : 'i';
+                }
+
+                $operator = '=';
+                if ($key === 'name') {
+                    $operator = 'LIKE';
+                }
+                if ($key === 'price') {
+                    $operator = '<=';
+                }
+
+                if ($key === 'name') {
+                    $whereClause[] = "LOWER(pc.$dbColumn) $operator LOWER(?)";
+                    $params[] = "%$value%";
+                    $types .= $type;
+                } else {
+                    $whereClause[] = "p.$dbColumn $operator ?";
+                    $params[] = $value;
+                    $types .= $type;
+                }
+            }
+        }
+
+        if (!empty($whereClause)) {
+            $sql .= " WHERE " . implode(" AND ", $whereClause);
+        }
+
+        $sql .= " GROUP BY p.id ORDER BY positive_votes DESC";
+
+        $stmt = $this->db->prepare($sql);
+
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+    public function getAllProductsForBusinesses($keys, $values, $businessIds)
+    {
+        $allowedKeys = [
+            'name' => 'name',
+            'price' => 'price',
+        ];
+
+        $sql = "SELECT p.*, COUNT(v.vote) AS positive_votes 
+            FROM products p 
+            LEFT JOIN votes v ON p.id = v.product_id AND v.vote = 1
+            LEFT JOIN product_category pc ON p.prod_cat_id = pc.id";
+
+        $params = [];
+        $types = '';
+        $whereClause = [];
+
+        if (!empty($businessIds)) {
+            $placeholders = implode(',', array_fill(0, count($businessIds), '?'));
+            $whereClause[] = "p.business_id IN ($placeholders)";
+            foreach ($businessIds as $id) {
+                $params[] = $id;
+                $types .= 'i';
+            }
+        } else {
+            throw new InvalidArgumentException("businessIds list cannot be empty");
+        }
+
+        for ($i = 0; $i < count($keys); $i++) {
+            $key = $keys[$i];
+            $value = $values[$i];
+
+            if (array_key_exists($key, $allowedKeys)) {
+                $dbColumn = $allowedKeys[$key];
+                $type = 's';
+
+                if (in_array($key, ['price', 'quantity'])) {
+                    if (!is_numeric($value)) {
+                        throw new InvalidArgumentException("Invalid numeric input for $key");
+                    }
+                    $type = is_float($value + 0) ? 'd' : 'i';
+                }
+
+                $operator = '=';
+                if ($key === 'name' || $key === 'category') {
+                    $operator = 'LIKE';
+                }
+                if ($key === 'price') {
+                    $operator = '<=';
+                }
+
+                if ($key !== 'name') {
+                    $whereClause[] = "p.$dbColumn $operator ?";
+                    $params[] = $value;
+                    $types .= $type;
+                } else {
+                    $whereClause[] = "LOWER(pc.$dbColumn) $operator LOWER(?)";
+                    $params[] = "%$value%";
+                    $types .= $type;
+                }
+            }
+        }
+
+        if (!empty($whereClause)) {
+            $sql .= " WHERE " . implode(" AND ", $whereClause);
+        }
+
+        $sql .= " GROUP BY p.id ORDER BY positive_votes DESC";
+
+        error_log("" . $sql);
+        $stmt = $this->db->prepare($sql);
+
+        if (!empty($params)) {
+            $stmt->bind_param($types, ...$params);
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->num_rows > 0 ? $result->fetch_all(MYSQLI_ASSOC) : [];
+    }
+
+
+    public function getAllProductsForB($business_id)
     {
         $sql = "SELECT * FROM products where business_id = ?";
         $stmt = $this->db->prepare($sql);

@@ -21,4 +21,22 @@ class BusinessAreaModel
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    public function getBusinessIdsByArea($areaId)
+    {
+        $sql = "SELECT business_id FROM business_area WHERE area_id = ?";
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param('i', $areaId); // 'i' = integer
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        $businessIds = [];
+        while ($row = $result->fetch_assoc()) {
+            $businessIds[] = $row['business_id'];
+        }
+
+        return $businessIds;
+    }
+
 }
