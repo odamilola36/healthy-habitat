@@ -63,7 +63,9 @@ class ProductController
 
     public function showResidentHome($key, $value)
     {
-        $products = $this->productModel->getAllProducts($key, $value);
+        $areaId = $this->residentModel->getResidentByUserId($_SESSION['user_id'])['area_id'];
+        $businessAreas = $this->businessAreaModel->getBusinessIdsByArea($areaId);
+        $products = $this->productModel->getAllProductsForBusinesses($key, $value, $businessAreas);
 
         include __DIR__ . '/../view/resident.php';
     }
@@ -182,17 +184,17 @@ class ProductController
         return $this->productModel->getProductByName($name);
     }
 
-    public function showBusinessHome()
+    public function showBusinessHome($key, $value)
     {
         $userId = $_SESSION['user_id'];
         $business = $this->businessModel->getBusinessByUserId($userId);
-        $products = $this->productModel->getAllProductsForBusiness($business['id']);
+        $products = $this->productModel->getAllProductsForBusiness($key, $value, $business['id']);
 
 
         include __DIR__ . '/../view/business-page.php';
     }
 
-    public function showCouncilPageHome()
+    public function showCouncilPageHome($key, $value)
     {
         $userId = $_SESSION['user_id'];
         $council = $this->councilModel->getCouncilByUserId($userId);
@@ -200,7 +202,7 @@ class ProductController
         $areaIds = array_map(fn($obj) => $obj['id'], $areas);
         $businessAreas = $this->businessAreaModel->getBusinessAreaByAreaIds($areaIds);
         $businessIds = array_map(fn($obj) => $obj['business_id'], $businessAreas);
-        $products = $this->productModel->getAllProductsByBusinessIds($businessIds);
+        $products = $this->productModel->getAllProductsForBusinesses($key, $value, $businessIds);
 
 
         include __DIR__ . '/../view/council-page.php';

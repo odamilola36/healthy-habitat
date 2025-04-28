@@ -10,10 +10,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <title>Product Details</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="min-h-screen flex flex-col">
     <nav class="bg-white border-gray-200 dark:bg-emerald-600">
         <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
-            <div class="flex flex-row">               
+            <div class="flex flex-row">
                 <svg class="size-16 rounded-md bg-yellow-500" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     width="1024" height="1024" viewBox="0 0 1000 1000">
                     <path
@@ -615,8 +616,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                         Network</p>
                 </div>
             </div>
-            <div class="flex flex-row w-24 rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-                <a href="/logout.php" class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
+            <div
+                class="flex flex-row w-24 rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                <a href="/logout.php"
+                    class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Logout</a>
             </div>
         </div>
     </nav>
@@ -624,7 +627,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <div class="flex flex-1">
         <div class="w-64 bg-gray-100 p-6 shadow-md">
             <ul class="space-y-4">
-            <li class="cursor-pointer <?= $currentPage === 'council-page.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
+                <li
+                    class="cursor-pointer <?= $currentPage === 'council-page.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
                     <a href="council-page.php" class="hover:text-emerald-600 font-medium">Home</a>
                 </li>
                 <li class="cursor-pointer">
@@ -646,6 +650,42 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </div>
 
         <div class="p-8 flex-1">
+            <?php
+            if (!empty($products)) { ?>
+                <div x-data="filterSearch()" class="max-w-xl mb-4 mx-auto rounded-md shadow-sm">
+                    <form id="searchForm" action="" method="GET" @submit.prevent="submitForm">
+                        <div class="flex items-center gap-2">
+                            <select x-model="newFilter.key" @change="updateInputType"
+                                class="py-2 px-2 text-gray-700 border border-gray-300 rounded w-1/3">
+                                <option value="" class="text-xs px-2 text-gray-700">Select Filter</option>
+                                <template x-for="option in availableOptions" :key="option">
+                                    <option :value="option" x-text="option.charAt(0).toUpperCase() + option.slice(1)">
+                                    </option>
+                                </template>
+                            </select>
+                            <input :type="inputType" x-model="newFilter.value" @keydown.enter.prevent="addFilter"
+                                placeholder="Enter value then Go to submit"
+                                class="py-2 px-2 border border-gray-300 rounded w-full" />
+                            <button type="submit"
+                                class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">Go</button>
+                            <a href="index.php">
+                                <a href="index.php" onclick="resetFilters()"
+                                    class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">Reset</a></a>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            <template x-for="(filter, index) in filters" :key="index">
+                                <div
+                                    class="flex items-center space-x-1 bg-gray-100 text-gray-800 px-3 py-1 mb-2 rounded-full text-sm">
+                                    <span x-text="`${filter.key}: ${filter.value}`"></span>
+                                    <button type="button" @click="removeFilter(index)">✖</button>
+                                </div>
+                            </template>
+                        </div>
+                    </form>
+                    <span class="text-red-500 text-xs" id="search-error"></span>
+                </div>
+
+            <?php } ?>
             <?php
             if (!empty($products)) {
                 $count = 0;

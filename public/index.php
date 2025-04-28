@@ -64,10 +64,14 @@ if (($requestUri == '/' || $requestUri == '/index.php') && $requestMethod == 'GE
     $productController->showResidentHome($key, $value);
 } elseif ($requestUri == '/council-page.php' && $requestMethod == 'GET') {
     $authUtil->requiresCouncil();
-    $productController->showCouncilPageHome();
+    $key = isset($_GET['key']) ? $_GET['key'] : [];
+    $value = isset($_GET['value']) ? $_GET['value'] : [];
+    $productController->showCouncilPageHome($key, $value);
 } elseif ($requestUri == '/business-page.php' && $requestMethod == 'GET') {
     $authUtil->requiresBusiness();
-    $productController->showBusinessHome();
+    $key = isset($_GET['key']) ? $_GET['key'] : [];
+    $value = isset($_GET['value']) ? $_GET['value'] : [];
+    $productController->showBusinessHome($key, $value);
 } elseif ($requestUri == '/logout.php' && $requestMethod == 'GET') {
     $authController->logout();
 } elseif ($requestUri == '/add-product.php' && $requestMethod == 'GET') {
