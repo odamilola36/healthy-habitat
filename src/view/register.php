@@ -863,10 +863,4 @@
 
     </div>
 
-    <footer class="bg-emerald-600 h-28">
-        <p>&copy; 2025 Healthy Habitat Network. All rights reserved.</p>
-    </footer>
-
-</body>
-
-</html>
+<?php include("../src/include/footer.php"); ?>

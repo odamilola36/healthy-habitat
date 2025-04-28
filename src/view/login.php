@@ -9,10 +9,10 @@
     <script src="../../scripts/ds-min.js"></script>
 </head>
 
-<body>
+<body class="min-h-screen flex flex-col">
     <nav class="bg-white border-gray-200 dark:bg-emerald-600">
-        <div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-2">
-            <div class="flex flex-row">
+        <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
+            <div class="flex flex-row">               
                 <svg class="size-16 rounded-md bg-yellow-500" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     width="1024" height="1024" viewBox="0 0 1000 1000">
                     <path
@@ -613,13 +613,11 @@
                         class="self-center font-stretch-semi-expanded text-2xl font-sans-serif whitespace-nowrap dark:text-white">
                         Network</p>
                 </div>
-                <div
-                    class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-                    <a href="/register.php"
-                        class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Sign
-                        up</a>
-                </div>
             </div>
+            <div class="flex flex-row w-24 rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                <a href="/register.php" class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Sign up</a>
+            </div>
+        </div>
     </nav>
 
     <div class="w-2/6 mx-auto mt-20">
@@ -694,9 +692,4 @@
 
     </div>
 
-    <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2025 Healthy Habitat Network. All rights reserved.</p>
-    </footer>
-</body>
-
-</html>
+<?php include("../src/include/footer.php"); ?>

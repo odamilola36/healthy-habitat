@@ -10,8 +10,7 @@
     <script src="../../scripts/ds-min.js"></script>
 </head>
 
-<body>
-
+<body class="min-h-screen flex flex-col">
     <nav class="bg-white border-gray-200 dark:bg-emerald-600">
         <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
             <div class="flex flex-row">
@@ -717,4 +716,4 @@
     </div>
     </div>
 
-    <?php include("../src/include/footer.php"); ?>
+<?php include("../src/include/footer.php"); ?>
