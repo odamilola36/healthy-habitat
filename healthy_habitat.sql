@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 28, 2025 at 03:33 PM
+-- Generation Time: Apr 28, 2025 at 04:33 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -64,7 +64,8 @@ CREATE TABLE `businesses` (
 --
 
 INSERT INTO `businesses` (`id`, `user_id`, `business_name`, `registration_number`, `created_at`) VALUES
-(1, 2, 'shotzbymanuel', '456789', '2025-04-26 17:37:27');
+(1, 2, 'shotzbymanuel', '456789', '2025-04-26 17:37:27'),
+(2, 4, 'Dibia wellness', '234500', '2025-04-28 15:26:22');
 
 -- --------------------------------------------------------
 
@@ -82,7 +83,8 @@ CREATE TABLE `business_area` (
 --
 
 INSERT INTO `business_area` (`business_id`, `area_id`) VALUES
-(1, 1);
+(1, 1),
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -131,7 +133,11 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `pricing_category`, `price`, `health_benefits`, `certifications`, `product_type`, `quantity`, `image_name`, `business_id`, `prod_cat_id`) VALUES
-(3, 'Organic Honey', '                        naturally and unblended oney', 'affordable', 5.00, '                        makes your body glow', 'ISA', 'product', 3, '1_img_680f67714bb405.67717132.JPG', 1, 1);
+(3, 'Organic Honey', '                        naturally and unblended oney', 'affordable', 5.00, '                        makes your body glow', 'ISA', 'product', 3, '1_img_680f67714bb405.67717132.JPG', 1, 1),
+(4, 'Organic Cinnamon Tea ', '                       Gently spiced and aromatic cinnamon tea ', 'affordable', 8.00, '                     Blood sugar regulation and brain function  ', 'ISA', 'product', 20, '1_img_680f8dc1ec8e00.23616557.JPG', 1, 1),
+(5, 'Healing massage service ', '                       Deep tissue massage ', 'premium', 210.00, '                        Relaxation, reduced stress and muscle tension, improved circulation and blood flow', 'ISA', 'services', 7, '1_img_680f8f03b0c0d6.95030816.JPG', 1, 2),
+(6, 'Beauty balm cream', '                        Dibia mineral cream for top-to-toe glow', 'moderate', 25.00, '                        Mosturizing skin texture', 'ISA', 'product', 30, '2_img_680f90daef4926.63592329.JPG', 2, 2),
+(7, 'Personal training', '                        To help you meet your fitness goals', 'premium', 150.00, '                        Keeping fit, building muscles and building confidence', 'ISA', 'services', 5, '2_img_680f918fa85812.39900503.JPG', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -220,7 +226,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `email`, `password`, `telephone`, `address`, `city`, `postcode`, `role`, `created_at`, `updated_at`) VALUES
 (1, 'owen@owen.com', '$2y$12$ty/sG3lUqeqeEA0AfEzX3uq.Mkz3gXoXgGFjJMu9u25r96EhLzioC', '+447366554397', 'LU15FT', 'luton', '4 dunfries street', 'council', '2025-04-26 17:31:15', '2025-04-26 17:31:15'),
 (2, 'emmanuel@k.com', '$2y$12$nknIewFdVLRVa0/1DFlZauAgguhaF.iIT7ABPFfjtssJFc6bwjt.S', '07032661416', 'lu15et', 'luton', '99, russell rise', 'business', '2025-04-26 17:37:27', '2025-04-26 17:37:27'),
-(3, 'demo@demo.com', '$2y$10$YtQmoYO8g0PQINyXKrVhKeDsEVu4SDmov/zyDXnitLt2lqCJabQOC', '07234563453', 'LU12RT', 'Luton', '60 hartfield', 'resident', '2025-04-26 18:07:53', '2025-04-28 12:03:34');
+(3, 'demo@demo.com', '$2y$10$YtQmoYO8g0PQINyXKrVhKeDsEVu4SDmov/zyDXnitLt2lqCJabQOC', '07234563453', 'LU12RT', 'Luton', '60 hartfield', 'resident', '2025-04-26 18:07:53', '2025-04-28 12:03:34'),
+(4, 'dibia@dibia.com', '$2y$12$MiuqmXfm2.cHTvLEk3S3dee7T6xOwzKIqlbPf1J32nDOR/Xlvxfpe', '07032661418', 'LU27RB', 'Luton', '55, temple street', 'business', '2025-04-28 15:26:22', '2025-04-28 15:26:22');
 
 -- --------------------------------------------------------
 
@@ -339,7 +346,7 @@ ALTER TABLE `areas`
 -- AUTO_INCREMENT for table `businesses`
 --
 ALTER TABLE `businesses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `local_council`
@@ -351,7 +358,7 @@ ALTER TABLE `local_council`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `product_category`
@@ -369,7 +376,7 @@ ALTER TABLE `residents`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `votes`
