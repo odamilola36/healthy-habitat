@@ -200,12 +200,12 @@ class ProductController
         $userId = $_SESSION['user_id'];
         $council = $this->councilModel->getCouncilByUserId($userId);
         $areas = $this->areaModel->getAreasByCouncilId($council['id']);
-
-        $areaIds = array_map(fn($obj) => $obj['id'], $areas);
-        $businessAreas = $this->businessAreaModel->getBusinessAreaByAreaIds($areaIds);
-        $businessIds = array_map(fn($obj) => $obj['business_id'], $businessAreas);
-        $products = $this->productModel->getAllProductsForBusinesses($key, $value, $businessIds);
-
+        if ($areas) {
+            $areaIds = array_map(fn($obj) => $obj['id'], $areas);
+            $businessAreas = $this->businessAreaModel->getBusinessAreaByAreaIds($areaIds);
+            $businessIds = array_map(fn($obj) => $obj['business_id'], $businessAreas);
+            $products = $this->productModel->getAllProductsForBusinesses($key, $value, $businessIds);
+        }
 
         include __DIR__ . '/../view/council-page.php';
     }
