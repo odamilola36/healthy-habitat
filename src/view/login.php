@@ -613,33 +613,13 @@
                         class="self-center font-stretch-semi-expanded text-2xl font-sans-serif whitespace-nowrap dark:text-white">
                         Network</p>
                 </div>
+                <div
+                    class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+                    <a href="/register.php"
+                        class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Sign
+                        up</a>
+                </div>
             </div>
-            <div id="mega-menu-icons" class="items-center justify-between hidden w-100 md:flex md:w-auto md:order-1">
-                <ul class="flex flex-row w-100 justify-evenly">
-                    <li class="p-2 w-24 text-center border-yellow-500 rounded-md border-2 hover:bg-emerald-300">
-                        <a href="/"
-                            class="block text-white py-2 p-10 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                            aria-current="page">Home
-                        </a>
-                    </li>
-                    <li class="p-2 w-24 text-center border-yellow-500 border-2 rounded-md hover:bg-emerald-300">
-                        <a href="/products.php"
-                            class="block py-2 text-white px-3 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700">Products
-                        </a>
-                    </li>
-                    <li class="p-2 w-24 text-center border-yellow-500 rounded-md border-2 hover:bg-emerald-300">
-                        <a href="/about.php"
-                            class="block py-2 text-white px-3 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-                    </li>
-                </ul>
-            </div>
-            <div
-                class="flex items-center rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
-                <a href="/register.php"
-                    class="text-white bg-black-700 hover:bg-black-800 focus:ring-4 focus:ring-black-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-black-600 dark:hover:bg-black-700 focus:outline-none dark:focus:ring-black-800">Sign
-                    up</a>
-            </div>
-        </div>
     </nav>
 
     <div class="w-2/6 mx-auto mt-20">
@@ -650,12 +630,14 @@
         </div>
         <form class="max-w-md mx-auto" action="/login.php" method="POST">
             <div class="relative z-0 w-full mb-5 group">
-                <input type="email" name="username" id="username"
+                <input type="email" name="username" id="username" oninput="validateEmail(event)"
+                    onblur="removeError(event)"
                     class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
                     placeholder=" " required />
                 <label for="username"
                     class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email
                     address</label>
+                <span class="text-red-500 text-xs" id="email-error"></span>
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <input type="password" name="password" id="password"

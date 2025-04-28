@@ -16,6 +16,13 @@ class UserModel
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
+    public function findUserById($username)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->bind_param("i", $username);
+        $stmt->execute();
+        return $stmt->get_result()->fetch_assoc();
+    }
 
     public function createUser($email, $password, $role, $telephone, $city, $postcode, $address)
     {
@@ -23,5 +30,15 @@ class UserModel
         $stmt->bind_param("sssssss", $email, $password, $role, $telephone, $city, $postcode, $address);
         $stmt->execute();
         return $stmt->insert_id;
+    }
+    function fieldExists($fieldName, $value)
+    {
+        $query = "SELECT COUNT(*) FROM users WHERE $fieldName = ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param("s", $value);
+        $stmt->execute();
+        $stmt->bind_result($count);
+        $stmt->fetch();
+        return $count > 0;
     }
 }

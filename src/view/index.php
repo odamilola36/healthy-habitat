@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Healthy Habitat Network</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="../../scripts/ds-min.js"></script>
 </head>
 
 <body>
@@ -614,25 +616,6 @@
                         Network</p>
                 </div>
             </div>
-            <div class="flex flex-row align-center md:flex md:w-auto md:order1">
-                <ul class="flex flex-row w-100 justify-evenly">
-                    <li class="p-2 w-24 text-center border-yellow-500 rounded-md border-2 hover:bg-emerald-300">
-                        <a href="/"
-                            class="block text-white py-2 p-10 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                            aria-current="page">Home
-                        </a>
-                    </li>
-                    <li class="p-2 w-24 text-center border-yellow-500 border-2 rounded-md hover:bg-emerald-300">
-                        <a href="/products.php"
-                            class="block py-2 text-white px-3 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700">Products
-                        </a>
-                    </li>
-                    <li class="p-2 w-24 text-center border-yellow-500 rounded-md border-2 hover:bg-emerald-300">
-                        <a href="/about.php"
-                            class="block py-2 text-white px-3 md:border-0 md:hover:text-black-600 md:p-0 md:dark:hover:text-black-500 dark:hover:bg-gray-700 dark:hover:text-black-500 md:dark:hover:bg-transparent dark:border-gray-700">About</a>
-                    </li>
-                </ul>
-            </div>
             <div class="flex flex-row">
                 <div
                     class="flex mx-5 w-24 rounded-md hover:bg-yellow-300 bg-yellow-500 md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
@@ -649,15 +632,49 @@
         </div>
     </nav>
 
-    <div class="w-5/6 mx-auto mt-20">
+    <div class="w-5/6 mx-auto mt-20 mb-20">
+
+        <div x-data="filterSearch()" class="max-w-xl mb-4 mx-auto rounded-md shadow-sm">
+            <form id="searchForm" action="" method="GET" @submit.prevent="submitForm">
+                <div class="flex items-center gap-2">
+                    <select x-model="newFilter.key" @change="updateInputType"
+                        class="py-2 px-2 text-gray-700 border border-gray-300 rounded w-1/3">
+                        <option value="" class="text-xs px-2 text-gray-700">Select Filter</option>
+                        <template x-for="option in availableOptions" :key="option">
+                            <option :value="option" x-text="option.charAt(0).toUpperCase() + option.slice(1)"></option>
+                        </template>
+                    </select>
+                    <input :type="inputType" x-model="newFilter.value" @keydown.enter.prevent="addFilter"
+                        placeholder="Enter value then Go to submit"
+                        class="py-2 px-2 border border-gray-300 rounded w-full" />
+                    <button type="submit"
+                        class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">Go</button>
+                    <a href="index.php">
+                        <a href="index.php" onclick="resetFilters()"
+                            class="bg-emerald-600 text-white px-4 py-2 rounded hover:bg-emerald-700 transition">Reset</a></a>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-2">
+                    <template x-for="(filter, index) in filters" :key="index">
+                        <div
+                            class="flex items-center space-x-1 bg-gray-100 text-gray-800 px-3 py-1 mb-2 rounded-full text-sm">
+                            <span x-text="`${filter.key}: ${filter.value}`"></span>
+                            <button type="button" @click="removeFilter(index)">✖</button>
+                        </div>
+                    </template>
+                </div>
+            </form>
+            <span class="text-red-500 text-xs" id="search-error"></span>
+        </div>
+
         <h3 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span
                 class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Healthy Habitat
-                Network</span></h3>
+                Network</span>
+        </h3>
         <?php
         if (!empty($products)) {
             $count = 0;
             foreach ($products as $index => $product) {
-                $imagePath = !empty($product['image']) ? 'images/' . htmlspecialchars($product['image']) : 'images/default.jpg';
+                $imagePath = !empty($product['image_name']) ? 'images/' . htmlspecialchars($product['image_name']) : 'images/default.jpg';
                 if ($count % 3 === 0) {
                     echo '<div class="flex flex-row gap-4 py-2">';
                 }
@@ -668,7 +685,7 @@
                     </a>
                     <div class="p-5">
                         <a href="product-details/<?= urlencode($product['id']) ?>">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
                                 <?= htmlspecialchars($product['name']) ?>
                             </h5>
                         </a>
@@ -688,7 +705,6 @@
                         </a>
                     </div>
                 </div>
-                <!-- </div> -->
                 <?php
                 $count++;
 
@@ -696,16 +712,9 @@
                     echo '</div>';
                 }
             }
-        } else {
-            echo "No products found";
         }
         ?>
     </div>
+    </div>
 
-    <footer class="bg-dark text-white text-center py-3">
-        <p>&copy; 2025 Healthy Habitat Network. All rights reserved.</p>
-    </footer>
-
-</body>
-
-</html>
+    <?php include("../src/include/footer.php"); ?>

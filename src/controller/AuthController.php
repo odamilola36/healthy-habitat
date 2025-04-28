@@ -35,18 +35,46 @@ class AuthController
         include __DIR__ . '/../view/register.php';
     }
 
+    public function showNotFound()
+    {
+        include __DIR__ . '/../view/notfound.php';
+    }
+    public function showErrorPage()
+    {
+        include __DIR__ . '/../view/500.php';
+    }
+
     public function register($postData)
     {
 
+        header('Content-Type: application/json');
         $this->userModel->findUserByUsername($postData['email']);
         $password = password_hash($postData['password'], PASSWORD_BCRYPT);
 
+        $errors = [];
+        if ($this->userModel->fieldExists('email', $postData['email'])) {
+            $errors['email'] = "Email already exists.";
+        }
+        if ($this->userModel->fieldExists('telephone', $postData['telephone'])) {
+            $errors['telephone'] = "Phone number already exists.";
+        }
+        if ($this->businessModel->businessFieldExists('business_name', $postData['businessName'])) {
+            $errors['bname'] = "Business name already exists.";
+        }
+        if ($this->businessModel->businessFieldExists('registration_number', $postData['regNumber'])) {
+            $errors['regnum'] = "Business Registration number already exists.";
+        }
+        if ($this->councilModel->getCouncilByName($postData['councilName'])) {
+            $errors['cname'] = "Council already exists.";
+        }
 
-        var_dump($postData);
+        if (!empty($errors)) {
+            echo json_encode(['success' => false, 'errors' => $errors]);
+            exit();
+        }
 
-        // Insert user into the database
         $userId = $this->userModel->createUser(
-            $postData['email'],
+            strtolower($postData['email']),
             $password,
             $postData['role'],
             $postData['telephone'],
@@ -56,23 +84,26 @@ class AuthController
         );
 
 
-        // Insert role-specific data
         if ($postData['role'] == 'business') {
-            $this->businessModel->createBusiness($userId, $postData['businessName'], $postData['regNumber']);
+            $this->businessModel->createBusiness($userId, $postData['businessName'], $postData['regNumber'], $postData['barea']);
         } elseif ($postData['role'] == 'resident') {
             $this->residentModel->createResident($userId, $postData['firstname'], $postData['lastname'], $postData['gender'], $postData['agegroup'], $postData['area']);
+            $interests = $postData['categories'];
+            foreach ($interests as $interestId) {
+                error_log("Adding interest $interestId for user $userId");
+                $this->residentModel->createResidentInterest($userId, $interestId);
+            }
         } elseif ($postData['role'] == 'council') {
             $this->councilModel->createCouncil($userId, $postData['councilName']);
         }
 
-        // Redirect to login page after successful registration
-        header('Location: /login.php');
+        echo json_encode(['success' => true]);
         exit();
     }
 
     public function login($postData)
     {
-        $username = $_POST['username'];
+        $username = strtolower($_POST['username']);
         $password = $_POST['password'];
 
         $user = $this->userModel->findUserByUsername($username);
@@ -83,12 +114,17 @@ class AuthController
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['logged_in'] = true;
 
-                if ($user['role'] == 'council') {
-                    header('Location: /council_dashboard.php');
+                $returnTo = $_SESSION['returnTo'] ?? null;
+
+                if ($returnTo) {
+                    header('Location: ' . $returnTo);
+                    $_SESSION['returnTo'] = null;
+                } else if ($user['role'] == 'council') {
+                    header('Location: /council-page.php');
                 } elseif ($user['role'] == 'business') {
-                    header('Location: /business_dashboard.php');
+                    header('Location: /business-page.php');
                 } elseif ($user['role'] == 'resident') {
-                    header('Location: /resident_dashboard.php');
+                    header('Location: /resident.php');
                 }
                 exit();
             } else {
@@ -104,10 +140,13 @@ class AuthController
 
     public function logout()
     {
-        session_start();
-        session_unset();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        $_SESSION = [];
         session_destroy();
+
         header('Location: /login.php');
-        exit();
+        exit;
     }
 }

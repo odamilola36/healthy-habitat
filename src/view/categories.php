@@ -626,7 +626,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <li class="cursor-pointer">
                     <a href="council-page.php" class="hover:text-emerald-600 font-medium">Home</a>
                 </li>
-                <li class="cursor-pointer <?= $currentPage === 'businesses.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
+                <li class="cursor-pointer">
                     <a href="businesses.php" class="hover:text-emerald-600 font-medium">Business</a>
                 </li>
                 <li class="cursor-pointer">
@@ -635,7 +635,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <li class="cursor-pointer">
                     <a href="add-area.php" class="hover:text-emerald-600 font-medium">Add Area</a>
                 </li>
-                <li class="cursor-pointer">
+                <li class="cursor-pointer <?= $currentPage === 'categories.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
                     <a href="categories.php" class="hover:text-emerald-600 font-medium">Categories</a>
                 </li>
                 <li class="cursor-pointer">
@@ -646,45 +646,30 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
         <div class="p-8 flex-1">
             <?php
-                if (!empty($businesses)) {
-                    $count = 0;
-                    foreach ($businesses as $index => $business) {
-                        if ($count % 3 === 0) {
-                            echo '<div class="flex flex-row gap-4 py-2">';
-                        }
-                        ?>
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm w-full sm:w-1/2 md:w-1/3 lg:w-1/3">
-                            <div class="p-5">
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Business Name:
-                                    </strong> <?= htmlspecialchars($business['business_name']) ?>
-                                </p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Email:
-                                    </strong> <?= htmlspecialchars($business['email']) ?>
-                                </p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Telephone:
-                                    </strong> <?= htmlspecialchars($business['telephone']) ?>
-                                </p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Address:
-                                    </strong> <?= htmlspecialchars($business['address']) ?>
-                                </p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>City:
-                                    </strong> <?= htmlspecialchars($business['city']) ?>
-                                </p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Postcode:
-                                    </strong> <?= htmlspecialchars($business['postcode']) ?>
-                                </p>
-                            </div>
-                        </div>
-                        <?php
-                        $count++;
-
-                        if ($count % 3 === 0 || $index === array_key_last($businesses)) {
-                            echo '</div>';
-                        }
+            if (!empty($categories)) {
+                $count = 0;
+                foreach ($categories as $index => $category) {
+                    if ($count % 3 === 0) {
+                        echo '<div class="flex flex-row gap-4 py-2">';
                     }
-                } else {
-                    echo "No businesses found!!!";
+                    ?>
+                    <div class="bg-white border border-gray-200 rounded-lg shadow-sm w-full sm:w-1/2 md:w-1/3 lg:w-1/3">
+                        <div class="p-5 text-center">
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+                                <?= htmlspecialchars($category['name']) ?>
+                            </p>
+                        </div>
+                    </div>
+                    <?php
+                    $count++;
+
+                    if ($count % 3 === 0 || $index === array_key_last($categories)) {
+                        echo '</div>';
+                    }
                 }
+            } else {
+                echo "No category found!!!";
+            }
             ?>
         </div>
     </div>

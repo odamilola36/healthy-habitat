@@ -3,15 +3,17 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Details</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="min-h-screen flex flex-col">
     <nav class="bg-white border-gray-200 dark:bg-emerald-600">
-        <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
+         <div class="flex flex-row items-center justify-between max-w-screen-xl mx-auto p-1">
             <div class="flex flex-row">
                 <svg class="size-16 rounded-md bg-yellow-500" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     width="1024" height="1024" viewBox="0 0 1000 1000">
@@ -619,14 +621,14 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </div>
         </div>
     </nav>
-
+ 
     <div class="flex flex-1">
         <div class="w-64 bg-gray-100 p-6 shadow-md">
             <ul class="space-y-4">
                 <li class="cursor-pointer">
                     <a href="council-page.php" class="hover:text-emerald-600 font-medium">Home</a>
                 </li>
-                <li class="cursor-pointer <?= $currentPage === 'businesses.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
+                <li class="cursor-pointer">
                     <a href="businesses.php" class="hover:text-emerald-600 font-medium">Business</a>
                 </li>
                 <li class="cursor-pointer">
@@ -638,55 +640,59 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <li class="cursor-pointer">
                     <a href="categories.php" class="hover:text-emerald-600 font-medium">Categories</a>
                 </li>
-                <li class="cursor-pointer">
+                <li class="cursor-pointer <?= $currentPage === 'add-category.php' ? 'border-l-4 border-yellow-500 pl-2 text-yellow-500' : 'pl-2' ?>">
                     <a href="add-category.php" class="hover:text-emerald-600 font-medium">Add Category</a>
                 </li>
             </ul>
         </div>
 
         <div class="p-8 flex-1">
-            <?php
-                if (!empty($businesses)) {
-                    $count = 0;
-                    foreach ($businesses as $index => $business) {
-                        if ($count % 3 === 0) {
-                            echo '<div class="flex flex-row gap-4 py-2">';
-                        }
-                        ?>
-                        <div class="bg-white border border-gray-200 rounded-lg shadow-sm w-full sm:w-1/2 md:w-1/3 lg:w-1/3">
-                            <div class="p-5">
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Business Name:
-                                    </strong> <?= htmlspecialchars($business['business_name']) ?>
-                                </p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Email:
-                                    </strong> <?= htmlspecialchars($business['email']) ?>
-                                </p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Telephone:
-                                    </strong> <?= htmlspecialchars($business['telephone']) ?>
-                                </p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Address:
-                                    </strong> <?= htmlspecialchars($business['address']) ?>
-                                </p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>City:
-                                    </strong> <?= htmlspecialchars($business['city']) ?>
-                                </p>
-                                <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"><strong>Postcode:
-                                    </strong> <?= htmlspecialchars($business['postcode']) ?>
-                                </p>
-                            </div>
-                        </div>
-                        <?php
-                        $count++;
+            <div class="w-5/6 m-auto mt-20">
 
-                        if ($count % 3 === 0 || $index === array_key_last($businesses)) {
-                            echo '</div>';
-                        }
-                    }
-                } else {
-                    echo "No businesses found!!!";
-                }
-            ?>
+                <?php if (isset($_SESSION['success'])): ?>
+                    <div id="successAlert" class="bg-green-100 text-green-800 p-3 rounded mb-4 flex items-center justify-between">
+                        <span><?= htmlspecialchars($_SESSION['success']) ?></span>
+                        <button onclick="document.getElementById('successAlert').style.display='none'" class="text-red-800 hover:text-red-600 ml-4 font-bold text-lg">
+                            &times;
+                        </button>
+                    </div>
+                    <?php unset($_SESSION['success']); ?>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div id="errorAlert" class="bg-red-100 text-red-800 p-3 rounded mb-4 flex items-center justify-between">
+                        <span><?= htmlspecialchars($_SESSION['error']) ?></span>
+                        <button onclick="document.getElementById('errorAlert').style.display='none'" class="text-red-800 hover:text-red-600 ml-4 font-bold text-lg">
+                            &times;
+                        </button>
+                    </div>
+                    <?php unset($_SESSION['error']); ?>
+                <?php endif; ?>
+
+                <div class="inline-flex items-center justify-center w-full">
+                    <hr class="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                    <span
+                        class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 left-1/2 dark:text-white dark:bg-gray-900">Add
+                        Category</span>
+                </div>
+                <form class="max-w-md mx-auto p-10" action="/add-category.php" method="POST"
+                    enctype="multipart/form-data">
+                    <div class=" relative z-0 w-full mb-5 group">
+                        <input type="text" name="name" id="name"
+                            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-1 border-b-2  dark:focus:border-black-500 focus:outline-none focus:ring-0 focus:border-black-600 peer"
+                            placeholder=" " required />
+                        <label for="name"
+                            class="peer-focus:font-medium absolute pl-2 text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black-600 peer-focus:dark:text-black-500 peer-placeholder-shown:scale-80 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                            Category Name
+                        </label>
+                    </div>
+                    <div class="flex flex-row place-content-center mt-10">
+                        <button type="submit"
+                            class="text-white pl-8 pr-8 bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-400 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-yellow-400 dark:hover:bg-yellow-400 dark:focus:ring-yellow-400">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-<?php include("../src/include/footer.php");?>
+    <?php include("../src/include/footer.php"); ?>
